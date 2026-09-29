@@ -372,7 +372,7 @@ CH5_OVERVIEW = [
      "민감 정보 유형(SIT) 포함 프롬프트 처리 차단", "step-ch5-1"],
     ["2", "DLP 정책 생성 — Teams",
      "Purview > 데이터 손실 방지 > 정책<br>(Teams 채팅·채널 메시지 위치)",
-     "SIT 포함 Teams 메시지 전송 차단", "step-ch5-2"],
+     "SIT 포함 Teams 메시지 전송 차단 → 실제 차단·경고 생성 확인", "step-ch5-2"],
     ["3", "커뮤니케이션 규정 준수 정책 생성",
      "Purview > 커뮤니케이션 규정 준수 > 정책<br>(AI 에이전트 비윤리적 상호작용 템플릿)",
      "에이전트 상호작용의 부적절·비윤리·기밀 공유 탐지", "step-ch5-3"],
@@ -413,6 +413,15 @@ CH5_NEW_FIGS = [
      "정책 모드에서 ① <b>정책을 즉시 켭니다</b>를 선택합니다. 1단계와 동일하게, 실제 차단·경고를 확인하려면 시뮬레이션이 아닌 즉시 켜기로 활성화합니다."),
     ("dlp-tm-5", "2-5", "DLP 정책 생성(Teams) — 완료", "img/dlp-tm-done.png",
      "Teams용 DLP 정책 생성이 완료됩니다. Copilot용(1단계)과 Teams용(2단계)을 분리해 두면, 에이전트가 어느 표면(Copilot 채팅 / Teams 메시지)에서 민감정보를 다루는지에 따라 탐지·차단 지점을 명확히 구분할 수 있습니다."),
+
+    ("callout",
+     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-2v">DLP 실제 동작 확인 — Teams 차단 &amp; 경고</h2>'
+     '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">위에서 만든 <b>DLP-Teams 정책</b>이 실제로 어떻게 작동하는지, 데모 에이전트가 게시된 Teams 채팅에서 '
+     '<b>신용카드 번호를 전송</b>해 검증한 결과입니다. 정책 생성만으로 끝나지 않고, 실제 차단 UX와 경고가 어떻게 나타나는지 확인합니다.</p>'),
+    ("dlp-tm-block", "2-6", "실제 동작 — Teams 메시지 전송 차단", "img/dlp-tm-block.png",
+     "데모 에이전트(<code>Agent365-Guide-Demo</code>)가 게시된 Teams 채팅에 <code>Credit Card Number</code> 패턴(테스트용 카드번호)을 보내자, ① <b>메시지가 즉시 차단</b>되고 ② <b>“조직 정책으로 인해 메시지가 차단되었습니다”</b> 안내와 함께 ③ 위반한 SIT <b>Credit Card Number</b>가 표시됩니다. 에이전트에 전달되기 전에 <b>메시지 자체가 전송 차단</b>된 것으로, 에이전트 자체 안전거부와는 구분되는 <b>DLP 계층의 실제 차단</b>입니다.<br><br><span class=\"hl-note\">팁: 맥락(설명 문장) 없이 카드번호만 단독으로 보내면 SIT가 더 정확히 매칭됩니다.</span>"),
+    ("dlp-tm-alert", "2-7", "실제 동작 — Purview DLP 경고 생성", "img/dlp-tm-alert.png",
+     "차단과 동시에 <code>Purview &gt; 데이터 손실 방지 &gt; 경고</code>에 경고가 생성됩니다. 경고 상세의 <b>정책 세부 정보</b>에서 ① 일치한 정책 <b>Agent365-Guide-DLP-Teams</b>, ② 감지된 중요한 정보 유형 <b>Credit Card Number</b>, ③ 수행한 작업 <b>BlockAccess, GenerateAlert</b>를 확인할 수 있습니다. 즉 <b>차단(BlockAccess)</b>과 <b>경고(GenerateAlert)</b>가 함께 수행되어, 관리자가 실제 위반 이벤트를 사후에 추적할 수 있습니다."),
 
     ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3">3단계 · 커뮤니케이션 규정 준수 정책 생성</h2>'),
     ("s-cc", "3-1", "커뮤니케이션 규정 준수 정책 생성 — 정책 템플릿", "img/cc-template.png",
