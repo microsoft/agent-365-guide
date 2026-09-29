@@ -367,16 +367,16 @@ CH5_OVERVIEW = [
     ["0", "감사 준비",
      "Purview 포털 > 감사 > 감사 수집 상태 (+ 각 솔루션 역할)",
      "감사 로그 수집 활성화(DLP·CC·IRM 경고 공통 전제), 관리자·분석가 역할 확보", "step-ch5-0"],
-    ["1", "DLP 정책 생성 — Copilot",
+    ["1", "DLP 정책 — Copilot",
      "Purview > 데이터 손실 방지 > 정책<br>(Microsoft 365 Copilot·Copilot Chat 위치)",
      "민감 정보 유형(SIT) 포함 프롬프트 처리 차단", "step-ch5-1"],
-    ["2", "DLP 정책 생성 — Teams",
+    ["2", "DLP 정책 — Teams",
      "Purview > 데이터 손실 방지 > 정책<br>(Teams 채팅·채널 메시지 위치)",
      "SIT 포함 Teams 메시지 전송 차단 → 실제 차단·경고 생성 확인", "step-ch5-2"],
-    ["3", "커뮤니케이션 규정 준수 정책 생성",
+    ["3", "커뮤니케이션 규정 준수 정책",
      "Purview > 커뮤니케이션 규정 준수 > 정책<br>(AI 에이전트 비윤리적 상호작용 템플릿)",
      "에이전트 상호작용의 부적절·비윤리·기밀 공유 탐지", "step-ch5-3"],
-    ["4", "IRM 에이전트 정책 · 경고 확인",
+    ["4", "IRM 에이전트 정책",
      "Purview > 내부 위험 관리 > 정책 / 에이전트 경고",
      "에이전트 활동 기반 위험 지표·경고, DLP·CC·IRM 3종 경고 교차 확인", "step-ch5-4"],
 ]
@@ -390,7 +390,7 @@ CH5_NEW_FIGS = [
     ("s-audit", "0-1", "감사 준비 — 활성화 상태 확인", "img/slide-49.png",
      "<code>Purview &gt; 감사 &gt; 감사 수집 상태</code>에서 감사 로그 수집이 켜져 있는지 먼저 확인합니다. <b>감사 로그가 꺼져 있으면 DLP·CC·IRM 정책을 만들어도 분석할 활동 이벤트 자체가 없어 지표·경고가 생성되지 않습니다.</b> 이 단계는 이후 세 정책 모두의 공통 전제입니다."),
 
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-1">1단계 · DLP 정책 생성 — Microsoft 365 Copilot</h2>'),
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-1">1단계 · DLP 정책 — Microsoft 365 Copilot</h2>'),
     ("s-dlp-cp", "1-1", "DLP 정책 생성 — 정보 형식 선택", "img/dlp-cp-type.png",
      "<code>Purview &gt; 데이터 손실 방지 &gt; 정책 &gt; 정책 만들기</code>를 시작하면 <b>“어떤 정보를 보호하시겠습니까?”</b> 화면이 나옵니다. ① <b>엔터프라이즈 애플리케이션 및 디바이스</b>를 선택합니다. 이 범주에 <b>Microsoft Copilot 환경</b>이 포함되며, Teams / Microsoft 365 Copilot 채널에 게시된 <b>Copilot Studio 에이전트</b>의 상호작용도 이 위치에서 통제됩니다. 이어서 규정에서 <b>사용자 지정 정책</b>으로 시작합니다(Copilot 콘텐츠 보호는 사용자 지정 정책에서만 구성 가능). 이 작업에는 <b>Purview 데이터 보안 AI 관리자</b> 또는 규정 준수 관리자 역할이 필요합니다."),
     ("dlp-cp-2", "1-2", "DLP 정책 생성 — 위치(Microsoft 365 Copilot 및 Copilot Chat)", "img/dlp-cp-loc.png",
@@ -402,7 +402,7 @@ CH5_NEW_FIGS = [
     ("dlp-cp-5", "1-5", "DLP 정책 생성 — 완료", "img/dlp-cp-done.png",
      "정책이 생성되면 <b>DLP 경고</b>에서 정책 일치를 모니터링할 수 있습니다.<br><br><b>⚠️ Notice —</b> M365 Copilot 위치의 <b>프롬프트 처리 차단은 현재 미리 보기</b>로 순차 배포 중이며, 정책 활성화 전파에 시간이 걸립니다. 또한 <b>에이전트 자체 안전장치·모델 콘텐츠 필터가 DLP보다 먼저 응답을 막을 수</b> 있어, DLP 차단 UX와 경고는 지연되어 나타날 수 있습니다. 관련 기능·요건은 <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about' target='_blank' rel='noopener'>Microsoft 365 Copilot용 DLP(공식 문서)</a>를 참고하세요."),
 
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-2">2단계 · DLP 정책 생성 — Teams</h2>'),
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-2">2단계 · DLP 정책 — Teams</h2>'),
     ("s-dlp-tm", "2-1", "DLP 정책 생성(Teams) — 정보 형식 선택", "img/dlp-tm-type.png",
      "1단계와 동일하게 <code>Purview &gt; 데이터 손실 방지 &gt; 정책 &gt; 정책 만들기</code>에서 ① <b>엔터프라이즈 애플리케이션 및 디바이스</b>를 선택하고, 규정에서 <b>사용자 지정 정책</b>으로 시작합니다. 이번에는 <b>Teams 채팅·채널 메시지</b>를 대상으로 하는 별도 정책을 만듭니다."),
     ("dlp-tm-2", "2-2", "DLP 정책 생성(Teams) — 위치(Teams 채팅 및 채널 메시지)", "img/dlp-tm-loc.png",
@@ -423,7 +423,7 @@ CH5_NEW_FIGS = [
     ("dlp-tm-alert", "2-7", "실제 동작 — Purview DLP 경고 생성", "img/dlp-tm-alert.png",
      "차단과 동시에 <code>Purview &gt; 데이터 손실 방지 &gt; 경고</code>에 경고가 생성됩니다. 경고 상세의 <b>정책 세부 정보</b>에서 일치한 정책 <b>Agent365-Guide-DLP-Teams</b>, 감지된 중요한 정보 유형 <b>Credit Card Number</b>, 수행한 작업 <b>BlockAccess, GenerateAlert</b>를 확인할 수 있습니다. 즉 <b>차단(BlockAccess)</b>과 <b>경고(GenerateAlert)</b>가 함께 수행되어, 관리자가 실제 위반 이벤트를 사후에 추적할 수 있습니다."),
 
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3">3단계 · 커뮤니케이션 규정 준수 정책 생성</h2>'),
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3">3단계 · 커뮤니케이션 규정 준수 정책</h2>'),
     ("s-cc", "3-1", "커뮤니케이션 규정 준수 정책 생성 — 정책 템플릿", "img/cc-template.png",
      "<code>커뮤니케이션 규정 준수 &gt; 정책 &gt; 정책 만들기</code>에서 ① <b>AI 에이전트의 비윤리적 상호작용 탐지</b> 템플릿을 선택합니다. 이 템플릿은 <b>AI 에이전트가 보낸 메시지</b>에서 모욕적·위협적 언어 등 부적절한 텍스트를 탐지합니다(단순 Copilot 채팅이 아니라 에이전트 대상)."),
     ("cc-2", "3-2", "커뮤니케이션 규정 준수 정책 생성 — 구성(에이전트·검토자)", "img/cc-config.png",
@@ -439,7 +439,7 @@ CH5_NEW_FIGS = [
      "CC는 메시지를 차단하지 않고, 정책이 매칭한 에이전트 상호작용을 <code>정책 &gt; 보류 중(Pending)</code> 큐로 올립니다. 검토자는 항목을 열어 <b>검색된 조건</b>, <b>프롬프트·응답</b>, <b>사용자 활동</b>을 확인하고 <b>해결·에스컬레이션·태그·알림</b>으로 조치합니다. 이 예시 항목은 <b>Prompt Shields</b> 조건으로 탐지되었습니다(적대적 입력 탐지).<br><br><span class=\"hl-note\">참고: 이 정책 템플릿의 분류기는 금융 규정 계열 + Prompt Shields로, 한국어 유해·위협 텍스트를 잡으려면 <b>Threat·Harassment 등 부적절한 텍스트 분류기</b>(한국어 지원)가 포함된 정책을 별도로 구성해야 합니다.</span>"),
 
     ("callout",
-     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · IRM 에이전트 정책 생성 및 경고 확인</h2>'
+     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · IRM 에이전트 정책</h2>'
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">Purview <b>내부 위험 관리(IRM)</b>에서 에이전트 정책을 만들어 활동 기반 위험 신호를 수집하고 경고를 확인합니다. '
      'DLP·CC·IRM은 서로 다른 계층의 신호로, 하나의 에이전트 활동에 대해 <b>세 가지 경고를 교차로 확인</b>할 수 있습니다.</p>'),
 ]
