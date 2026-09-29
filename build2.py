@@ -419,9 +419,9 @@ CH5_NEW_FIGS = [
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">위에서 만든 <b>DLP-Teams 정책</b>이 실제로 어떻게 작동하는지, 데모 에이전트가 게시된 Teams 채팅에서 '
      '<b>신용카드 번호를 전송</b>해 검증한 결과입니다. 정책 생성만으로 끝나지 않고, 실제 차단 UX와 경고가 어떻게 나타나는지 확인합니다.</p>'),
     ("dlp-tm-block", "2-6", "실제 동작 — Teams 메시지 전송 차단", "img/dlp-tm-block.png",
-     "데모 에이전트(<code>Agent365-Guide-Demo</code>)가 게시된 Teams 채팅에 <code>Credit Card Number</code> 패턴(테스트용 카드번호)을 보내자, ① <b>메시지가 즉시 차단</b>되고 ② <b>“조직 정책으로 인해 메시지가 차단되었습니다”</b> 안내와 함께 ③ 위반한 SIT <b>Credit Card Number</b>가 표시됩니다. 에이전트에 전달되기 전에 <b>메시지 자체가 전송 차단</b>된 것으로, 에이전트 자체 안전거부와는 구분되는 <b>DLP 계층의 실제 차단</b>입니다.<br><br><span class=\"hl-note\">팁: 맥락(설명 문장) 없이 카드번호만 단독으로 보내면 SIT가 더 정확히 매칭됩니다.</span>"),
+     "데모 에이전트(<code>Agent365-Guide-Demo</code>)가 게시된 Teams 채팅에 <code>Credit Card Number</code> 패턴(테스트용 카드번호)을 보내자, <b>메시지가 즉시 차단</b>되고 <b>“조직 정책으로 인해 메시지가 차단되었습니다”</b> 안내와 함께 위반한 SIT <b>Credit Card Number</b>가 표시됩니다. 에이전트에 전달되기 전에 <b>메시지 자체가 전송 차단</b>된 것으로, 에이전트 자체 안전거부와는 구분되는 <b>DLP 계층의 실제 차단</b>입니다.<br><br><span class=\"hl-note\">팁: 맥락(설명 문장) 없이 카드번호만 단독으로 보내면 SIT가 더 정확히 매칭됩니다.</span>"),
     ("dlp-tm-alert", "2-7", "실제 동작 — Purview DLP 경고 생성", "img/dlp-tm-alert.png",
-     "차단과 동시에 <code>Purview &gt; 데이터 손실 방지 &gt; 경고</code>에 경고가 생성됩니다. 경고 상세의 <b>정책 세부 정보</b>에서 ① 일치한 정책 <b>Agent365-Guide-DLP-Teams</b>, ② 감지된 중요한 정보 유형 <b>Credit Card Number</b>, ③ 수행한 작업 <b>BlockAccess, GenerateAlert</b>를 확인할 수 있습니다. 즉 <b>차단(BlockAccess)</b>과 <b>경고(GenerateAlert)</b>가 함께 수행되어, 관리자가 실제 위반 이벤트를 사후에 추적할 수 있습니다."),
+     "차단과 동시에 <code>Purview &gt; 데이터 손실 방지 &gt; 경고</code>에 경고가 생성됩니다. 경고 상세의 <b>정책 세부 정보</b>에서 일치한 정책 <b>Agent365-Guide-DLP-Teams</b>, 감지된 중요한 정보 유형 <b>Credit Card Number</b>, 수행한 작업 <b>BlockAccess, GenerateAlert</b>를 확인할 수 있습니다. 즉 <b>차단(BlockAccess)</b>과 <b>경고(GenerateAlert)</b>가 함께 수행되어, 관리자가 실제 위반 이벤트를 사후에 추적할 수 있습니다."),
 
     ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3">3단계 · 커뮤니케이션 규정 준수 정책 생성</h2>'),
     ("s-cc", "3-1", "커뮤니케이션 규정 준수 정책 생성 — 정책 템플릿", "img/cc-template.png",
@@ -430,6 +430,13 @@ CH5_NEW_FIGS = [
      "① 감독할 AI 에이전트에서 <b>생성된 에이전트 &gt; Microsoft Copilot Studio</b>를 선택하고, ② <b>검토자</b>를 지정합니다. 커뮤니케이션 규정 준수는 <b>Microsoft 365 Copilot과 Copilot Studio로 만든 에이전트</b>의 프롬프트·응답 상호작용을 분석합니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/communication-compliance-copilot' target='_blank' rel='noopener'>생성형 AI 상호작용 탐지 정책(공식 문서)</a>."),
     ("cc-3", "3-3", "커뮤니케이션 규정 준수 정책 생성 — 완료", "img/cc-done.png",
      "커뮤니케이션 규정 준수 정책 생성이 완료됩니다. <b>정책 활성화에 최대 1시간, 통신 캡처(경고 생성)에 최대 24시간</b>이 소요됩니다."),
+
+    ("callout",
+     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3v">CC 실제 동작 확인 — 검토 큐 항목</h2>'
+     '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">DLP가 <b>차단</b>이라면, 커뮤니케이션 규정 준수(CC)는 <b>탐지·검토</b> 방식입니다. '
+     '정책이 매칭한 에이전트 상호작용이 실제로 검토 큐에 어떻게 올라오는지 확인합니다.</p>'),
+    ("cc-result", "3-4", "실제 동작 — 검토 큐(보류 중) 항목", "img/cc-result.png",
+     "CC는 메시지를 차단하지 않고, 정책이 매칭한 에이전트 상호작용을 <code>정책 &gt; 보류 중(Pending)</code> 큐로 올립니다. 검토자는 항목을 열어 <b>검색된 조건</b>, <b>프롬프트·응답</b>, <b>사용자 활동</b>을 확인하고 <b>해결·에스컬레이션·태그·알림</b>으로 조치합니다. 이 예시 항목은 <b>Prompt Shields</b> 조건으로 탐지되었습니다(적대적 입력 탐지).<br><br><span class=\"hl-note\">참고: 이 정책 템플릿의 분류기는 금융 규정 계열 + Prompt Shields로, 한국어 유해·위협 텍스트를 잡으려면 <b>Threat·Harassment 등 부적절한 텍스트 분류기</b>(한국어 지원)가 포함된 정책을 별도로 구성해야 합니다.</span>"),
 
     ("callout",
      '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · IRM 에이전트 정책 생성 및 경고 확인</h2>'
