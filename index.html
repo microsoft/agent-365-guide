@@ -37,8 +37,11 @@ html[data-theme="dark"] code{color:#ff9dd4;}
 .nav-group a.active .n{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;}
 .nav-parent{font-weight:600;}
 .nav-children{margin:2px 0 2px 10px;padding-left:12px;border-left:1.5px solid var(--border);}
-.nav-sub .n{flex:0 0 20px;height:20px;font-size:11px;}
+.nav-sub .n{flex:0 0 auto;min-width:20px;height:20px;padding:0 7px;font-size:11px;white-space:nowrap;}
 .nav-sub{font-size:13.5px;padding:7px 10px;}
+.nav-sub2{margin-left:32px;position:relative;color:var(--text-soft);}
+.nav-sub2::before{content:"└";position:absolute;left:-16px;color:var(--border);font-size:13px;}
+.nav-sub2.active{color:var(--accent);}
 .theme-toggle{display:inline-flex;align-items:center;gap:6px;margin:auto 8px 2px;align-self:flex-start;padding:8px 15px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
 .theme-toggle:hover{border-color:var(--accent);background:var(--surface);}
 .main{flex:1;min-width:0;}
@@ -81,6 +84,7 @@ table{width:100%;border-collapse:collapse;margin:6px 0 8px;font-size:14px;backgr
 th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
 th{background:var(--surface-2);font-weight:600;font-size:13px;white-space:nowrap;}
 td:first-child,th:first-child{text-align:center;font-weight:700;width:42px;color:var(--accent);}
+.tw.ov-wide table th:nth-child(3),.tw.ov-wide table td:nth-child(3){min-width:300px;}
 tr:last-child td{border-bottom:none;}
 tr.jump{cursor:pointer;transition:background .12s;}
 tr.jump td:last-child::after{content:"→ 이동";color:var(--accent);font-weight:700;float:right;opacity:0;transition:opacity .12s;padding-left:8px;font-size:12px;}
@@ -127,7 +131,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
 <div class="layout">
 <aside class="sidebar">
   <div class="brand"><img class="brand-logo" src="img/a365-logo.png" alt="Agent 365" width="26" height="26"><span>에이전트 보안을 위한<br>Agent 365 활용 가이드</span></div>
-  <div class="brand-sub">Copilot Studio · 관리 · 보안 실습 (0–8)</div>
+  <div class="brand-sub">Copilot Studio · 관리 · 보안 실습 (0–9)</div>
   <nav class="nav-group">
     <h4>가이드</h4>
     <a href="#overview" data-sec="overview" class="nav-parent"><span class="n">◆</span><span>Copilot Studio 에이전트</span></a>
@@ -141,6 +145,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
     <a href="#ch6" data-sec="ch6" class="nav-sub"><span class="n">6</span><span>에이전트 리스크 기반 접근제어</span></a>
     <a href="#ch7" data-sec="ch7" class="nav-sub"><span class="n">7</span><span>에이전트 런타임 보호</span></a>
     <a href="#ch8" data-sec="ch8" class="nav-sub"><span class="n">8</span><span>에이전트 트래픽 모니터링</span></a>
+    <a href="#ch10" data-sec="ch10" class="nav-sub"><span class="n">9</span><span>에이전트 폐기</span></a>
     </div>
   </nav>
   <button class="theme-toggle" id="tt">🌓 테마 전환</button>
@@ -167,8 +172,8 @@ html[data-theme="dark"] .xref{color:var(--accent);}
     <div class="tw"><table><thead><tr><th>포털</th><th>이 가이드에서의 용도</th><th>바로가기</th></tr></thead><tbody><tr><td class="pname">Copilot Studio</td><td>에이전트 생성 · 지침/지식/도구 구성 · 게시</td><td><a class="portal-link" href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">copilotstudio.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft 365 관리 센터 (MAC)</td><td>에이전트 승인 · 전사 배포 · 인벤토리(레지스트리)</td><td><a class="portal-link" href="https://admin.microsoft.com" target="_blank" rel="noopener">admin.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft Entra 관리 센터</td><td>역할 할당 · 조건부 액세스 · 로그인 로그 · Gen AI 인사이트</td><td><a class="portal-link" href="https://entra.microsoft.com" target="_blank" rel="noopener">entra.microsoft.com ↗</a></td></tr><tr><td class="pname">Power Platform 관리 센터 (PPAC)</td><td>환경 보안 · 위협 탐지 · 에이전트용 전역 보안 액세스(GSA)</td><td><a class="portal-link" href="https://admin.powerplatform.microsoft.com" target="_blank" rel="noopener">admin.powerplatform.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft Defender 포털</td><td>AI 보안 커넥터 · Copilot Studio 런타임 보호 정책</td><td><a class="portal-link" href="https://security.microsoft.com" target="_blank" rel="noopener">security.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft Purview 포털</td><td>내부 위험 관리(IRM) · 감사 · 에이전트 리스크 경고</td><td><a class="portal-link" href="https://purview.microsoft.com" target="_blank" rel="noopener">purview.microsoft.com ↗</a></td></tr></tbody></table></div>
 
     <h2 class="ov-h">단계별 필요한 역할 한눈에</h2>
-    <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 7장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
-    <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody><tr class="jump" data-target="ch0" tabindex="0"><td>0</td><td>에이전트 생성</td><td>환경 제작자(Maker) 이상</td><td>Power Platform 관리 센터 · 환경/보안 역할</td></tr><tr class="jump" data-target="ch1" tabindex="0"><td>1</td><td>승인 및 전사 배포</td><td>AI 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch2" tabindex="0"><td>2</td><td>인벤토리 확인</td><td>AI 읽기 권한자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch3" tabindex="0"><td>3</td><td>에이전트 차단</td><td>AI 관리자 · 에이전트 ID 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch4" tabindex="0"><td>4</td><td>기본 접근제어</td><td>조건부 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch5" tabindex="0"><td>5</td><td>리스크 탐지</td><td>내부자 위험 관리 분석가 또는 조사자</td><td>Purview &gt; 역할 및 범위 &gt; 역할 그룹</td></tr><tr class="jump" data-target="ch6" tabindex="0"><td>6</td><td>리스크 기반 접근제어</td><td>조건부 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch7" tabindex="0"><td>7</td><td>런타임 보호</td><td>애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자</td><td>Entra &gt; 역할 / Power Platform 관리 센터</td></tr><tr class="jump" data-target="ch8" tabindex="0"><td>8</td><td>트래픽 모니터링</td><td>전역 보안 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr></tbody></table></div>
+    <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 7·9장 일부는 Power Platform 역할 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
+    <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody><tr class="jump" data-target="ch0" tabindex="0"><td>0</td><td>에이전트 생성</td><td>환경 제작자(Maker) 이상</td><td>Power Platform 관리 센터 · 환경/보안 역할</td></tr><tr class="jump" data-target="ch1" tabindex="0"><td>1</td><td>승인 및 전사 배포</td><td>AI 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch2" tabindex="0"><td>2</td><td>인벤토리 확인</td><td>AI 읽기 권한자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch3" tabindex="0"><td>3</td><td>에이전트 차단</td><td>AI 관리자 · 에이전트 ID 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch4" tabindex="0"><td>4</td><td>기본 접근제어</td><td>조건부 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch5" tabindex="0"><td>5</td><td>리스크 탐지</td><td>내부자 위험 관리 분석가 또는 조사자</td><td>Purview &gt; 역할 및 범위 &gt; 역할 그룹</td></tr><tr class="jump" data-target="ch6" tabindex="0"><td>6</td><td>리스크 기반 접근제어</td><td>조건부 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch7" tabindex="0"><td>7</td><td>런타임 보호</td><td>애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자</td><td>Entra &gt; 역할 / Power Platform 관리 센터</td></tr><tr class="jump" data-target="ch8" tabindex="0"><td>8</td><td>트래픽 모니터링</td><td>전역 보안 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch10" tabindex="0"><td>9</td><td>에이전트 폐기</td><td>환경 시스템 관리자(삭제) · 에이전트 ID 관리자(신원 정리) · 감사 로그/eDiscovery 관리자(기록 보존)</td><td>Power Platform 환경 역할 / Entra &gt; 사용자 &gt; 할당된 역할 / Purview 역할 그룹</td></tr></tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
 
     <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
@@ -197,7 +202,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>Copilot Studio(New experience)에서 실습용 에이전트를 만들고, 지침·지식·도구를 구성한 뒤 Teams / Microsoft 365 Copilot 채널로 게시하고 관리자 승인까지 제출하는 단계입니다. 이후 1~8장의 모든 관리·보안 시나리오는 여기서 만든 에이전트를 대상으로 진행합니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정/확인 위치</th></tr></thead><tbody><tr class="jump" data-target="step-ch0-1" tabindex="0"><td>1</td><td>환경·권한 준비</td><td>New Copilot Studio &gt; 환경 선택기<br>Power platform 환경·역할 확인</td></tr><tr class="jump" data-target="step-ch0-2" tabindex="0"><td>2</td><td>빈 에이전트 생성</td><td>Agents &gt; New agent &gt; 이름·지침 입력 &gt; Save<br>New experience 유지; Agent365-Guide-Demo로 생성</td></tr><tr class="jump" data-target="step-ch0-3" tabindex="0"><td>3</td><td>지침·오케스트레이션</td><td>Build &gt; Instructions / Model / … &gt; Settings &gt; AI &amp; behavior<br>새 UI의 모델·행동 설정 확인; 기존 생성형 토글과 구분</td></tr><tr class="jump" data-target="step-ch0-4" tabindex="0"><td>4</td><td>지식 추가</td><td>… &gt; Settings &gt; Safety &amp; access / Build &gt; Add knowledge<br>필요한 지식 추가</td></tr><tr class="jump" data-target="step-ch0-5" tabindex="0"><td>5</td><td>도구 구성</td><td>Build &gt; Add tool &gt; Model Context Protocol (MCP) 등<br>필요한 도구 연결</td></tr><tr class="jump" data-target="step-ch0-6" tabindex="0"><td>6</td><td>테스트</td><td>Preview<br>도구 호출 확인 등</td></tr><tr class="jump" data-target="step-ch0-7" tabindex="0"><td>7</td><td>게시·채널 연결</td><td>게시 &gt; 채널 &gt; Teams 및 Microsoft 365 Copilot<br>에이전트 게시 및 채널 추가</td></tr><tr class="jump" data-target="step-ch0-8" tabindex="0"><td>8</td><td>관리자 승인 제출</td><td>채널 &gt; 가용성 옵션 &gt; 내 조직의 모든 사람에게 표시<br>관리자 승인을 위해 제출 &gt; 예 &gt; 새로 고침으로 요청 상태 확인</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정/확인 위치</th></tr></thead><tbody><tr class="jump" data-target="step-ch0-1" tabindex="0"><td>1</td><td>환경·권한 준비</td><td>New Copilot Studio &gt; 환경 선택기<br>Power platform 환경·역할 확인</td></tr><tr class="jump" data-target="step-ch0-2" tabindex="0"><td>2</td><td>빈 에이전트 생성</td><td>Agents &gt; New agent &gt; 이름·지침 입력 &gt; Save<br>New experience 유지; Agent365-Guide-Demo로 생성</td></tr><tr class="jump" data-target="step-ch0-3" tabindex="0"><td>3</td><td>지침·오케스트레이션</td><td>Build &gt; Instructions / Model / … &gt; Settings &gt; AI &amp; behavior<br>새 UI의 모델·행동 설정 확인; 기존 생성형 토글과 구분</td></tr><tr class="jump" data-target="step-ch0-4" tabindex="0"><td>4</td><td>지식 추가</td><td>… &gt; Settings &gt; Safety &amp; access / Build &gt; Add knowledge<br>필요한 지식 추가</td></tr><tr class="jump" data-target="step-ch0-5" tabindex="0"><td>5</td><td>도구 구성</td><td>Build &gt; Add tool &gt; Model Context Protocol (MCP) 등<br>필요한 도구 연결</td></tr><tr class="jump" data-target="step-ch0-6" tabindex="0"><td>6</td><td>테스트</td><td>Preview<br>도구 호출 확인 등</td></tr><tr class="jump" data-target="step-ch0-7" tabindex="0"><td>7</td><td>게시·채널 연결</td><td>게시 &gt; 채널 &gt; Teams 및 Microsoft 365 Copilot<br>에이전트 게시 및 채널 추가</td></tr><tr class="jump" data-target="step-ch0-8" tabindex="0"><td>8</td><td>관리자 승인 제출</td><td>채널 &gt; 가용성 옵션 &gt; 내 조직의 모든 사람에게 표시<br>관리자 승인을 위해 제출 &gt; 예 &gt; 새로 고침으로 요청 상태 확인</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch0-1">1단계 · 환경·권한 준비</h2>
       <figure class="fig" id="s4">
         <div class="fig-title"><span class="fig-num">1-1</span>환경·권한 준비 — 실습 환경 선택</div>
@@ -293,7 +298,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>제작자가 제출한 에이전트를 AI 관리자가 검토·승인하고, 조직 카탈로그(Microsoft Store)에 게시해 전사에 배포하는 단계입니다. 승인 심사에서는 제작자·업무 목적·지식·도구·요청 권한을 함께 확인합니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>AI 관리자 추가</td></tr><tr class="jump" data-target="step-ch1-1" tabindex="0"><td>1</td><td>관리자 승인 </td><td>AI 관리자: Microsoft 365 관리 센터 &gt; 에이전트 &gt; 모든 에이전트 &gt; 요청</td><td>제작자·업무 목적·지식·도구·요청 권한 검토; 필요 시 제출 거부</td></tr><tr class="jump" data-target="step-ch1-2" tabindex="0"><td>2</td><td>전사 배포 </td><td>요청 상세 &gt; 저장소에 게시 &gt; 대상 지정 &gt; 권한 검토 &gt; 게시</td><td>설치 가능·사전 설치 대상 구분, 요청 권한에 맞는 관리자 동의 수행</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>AI 관리자 추가</td></tr><tr class="jump" data-target="step-ch1-1" tabindex="0"><td>1</td><td>관리자 승인 </td><td>AI 관리자: Microsoft 365 관리 센터 &gt; 에이전트 &gt; 모든 에이전트 &gt; 요청</td><td>제작자·업무 목적·지식·도구·요청 권한 검토; 필요 시 제출 거부</td></tr><tr class="jump" data-target="step-ch1-2" tabindex="0"><td>2</td><td>전사 배포 </td><td>요청 상세 &gt; 저장소에 게시 &gt; 대상 지정 &gt; 권한 검토 &gt; 게시</td><td>설치 가능·사전 설치 대상 구분, 요청 권한에 맞는 관리자 동의 수행</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch1-1">1단계 · 관리자 승인</h2>
       <figure class="fig" id="s19">
         <div class="fig-title"><span class="fig-num">1-1</span>관리자 승인 — 요청 목록</div>
@@ -352,7 +357,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>테넌트에 존재하는 에이전트를 레지스트리에서 조회하고, 각 에이전트의 소유자·지식·도구·권한·채널 구성과 실제 사용량을 확인하는 단계입니다. 등록되어 있다는 것과 실제로 쓰이고 있다는 것은 다르므로 두 가지를 분리해서 봅니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>AI 읽기 권한자 추가</td></tr><tr class="jump" data-target="step-ch2-1" tabindex="0"><td>1</td><td>Registry 조회</td><td>Microsoft 365 관리 센터<br>에이전트 &gt; 모든 에이전트 &gt; 레지스트리</td><td>Platform = Copilot Studio로 필터링<br>이름·상태·채널 조회; 등록 ≠ 실제 사용</td></tr><tr class="jump" data-target="step-ch2-2" tabindex="0"><td>2</td><td>구성 확인</td><td>에이전트 상세 &gt; 세부 정보<br>사용자 / 데이터 &amp; 도구 / 권한 등 확인</td><td>소유자·지식·도구·권한·설치 대상 확인<br>Data &amp; tools 변경은 Copilot Studio에서</td></tr><tr class="jump" data-target="step-ch2-3" tabindex="0"><td>3</td><td>실제 사용 확인</td><td>에이전트 상세 &gt; 세부 정보 &gt; 활성 / Copilot Studio &gt; 모니터<br>조회 기간 / 활성 사용자 보기</td><td>게시 채널의 세션·활성 사용자 확인<br>테스트 패널 활동 제외, 기본 시간은 UTC 기준</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>AI 읽기 권한자 추가</td></tr><tr class="jump" data-target="step-ch2-1" tabindex="0"><td>1</td><td>Registry 조회</td><td>Microsoft 365 관리 센터<br>에이전트 &gt; 모든 에이전트 &gt; 레지스트리</td><td>Platform = Copilot Studio로 필터링<br>이름·상태·채널 조회; 등록 ≠ 실제 사용</td></tr><tr class="jump" data-target="step-ch2-2" tabindex="0"><td>2</td><td>구성 확인</td><td>에이전트 상세 &gt; 세부 정보<br>사용자 / 데이터 &amp; 도구 / 권한 등 확인</td><td>소유자·지식·도구·권한·설치 대상 확인<br>Data &amp; tools 변경은 Copilot Studio에서</td></tr><tr class="jump" data-target="step-ch2-3" tabindex="0"><td>3</td><td>실제 사용 확인</td><td>에이전트 상세 &gt; 세부 정보 &gt; 활성 / Copilot Studio &gt; 모니터<br>조회 기간 / 활성 사용자 보기</td><td>게시 채널의 세션·활성 사용자 확인<br>테스트 패널 활동 제외, 기본 시간은 UTC 기준</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch2-1">1단계 · Registry 조회</h2>
       <figure class="fig" id="s27">
         <div class="fig-title"><span class="fig-num">1-1</span>인벤토리 조회 — 레지스트리 진입</div>
@@ -388,7 +393,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>문제가 있는 에이전트를 즉시 사용 불가 상태로 만들고, 사용자 화면에서 실제로 차단됐는지 확인한 뒤 복구하는 단계입니다. 차단은 삭제나 Agent ID 인증 중지와는 구분되는 조치입니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>AI 관리자, 에이전트 ID 관리차 추가</td></tr><tr class="jump" data-target="step-ch3-1" tabindex="0"><td>1</td><td>에이전트 차단 실행</td><td>에이전트 상세 &gt; 차단<br>에이전트 차단 &gt; 저장</td><td>저장 후 차단 상태 확인<br>삭제·ID 인증 중지와 구분</td></tr><tr class="jump" data-target="step-ch3-2" tabindex="0"><td>2</td><td>차단 결과 확인</td><td>일반 사용자 Teams<br>Microsoft 365 Copilot</td><td>기존 진입점·새 설치·새 대화 확인<br>채널별 실제 사용 불가 상태 기록</td></tr><tr class="jump" data-target="step-ch3-3" tabindex="0"><td>3</td><td>차단 해제·복구</td><td>에이전트 상세 &gt; 차단 해제<br>에이전트 차단 해제 &gt; 저장 </td><td>설치·가용성 범위와 정상 실행 재확인</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>AI 관리자, 에이전트 ID 관리차 추가</td></tr><tr class="jump" data-target="step-ch3-1" tabindex="0"><td>1</td><td>에이전트 차단 실행</td><td>에이전트 상세 &gt; 차단<br>에이전트 차단 &gt; 저장</td><td>저장 후 차단 상태 확인<br>삭제·ID 인증 중지와 구분</td></tr><tr class="jump" data-target="step-ch3-2" tabindex="0"><td>2</td><td>차단 결과 확인</td><td>일반 사용자 Teams<br>Microsoft 365 Copilot</td><td>기존 진입점·새 설치·새 대화 확인<br>채널별 실제 사용 불가 상태 기록</td></tr><tr class="jump" data-target="step-ch3-3" tabindex="0"><td>3</td><td>차단 해제·복구</td><td>에이전트 상세 &gt; 차단 해제<br>에이전트 차단 해제 &gt; 저장 </td><td>설치·가용성 범위와 정상 실행 재확인</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch3-1">1단계 · 에이전트 차단 실행</h2>
       <figure class="fig" id="s32">
         <div class="fig-title"><span class="fig-num">1-1</span>에이전트 차단 실행</div>
@@ -401,7 +406,12 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-33.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-33.png" alt="에이전트 차단 실행"></a>
       </figure>
-      <div class="note">① <b>에이전트 차단</b>을 선택하고 ② 저장합니다. 차단은 에이전트를 삭제하거나 Agent ID의 인증 자체를 중지하는 것과는 다른 조치로, 구성은 유지한 채 <b>사용만 즉시 막는</b> 방식입니다.</div><h2 class="ov-h step-h" id="step-ch3-2">2단계 · 차단 결과 확인</h2>
+      <div class="note">① <b>에이전트 차단</b>을 선택하고 ② 저장합니다. 차단은 에이전트를 삭제하거나 Agent ID의 인증 자체를 중지하는 것과는 다른 조치로, 구성은 유지한 채 <b>사용만 즉시 막는</b> 방식입니다.</div>
+      <figure class="fig" id="s33-2">
+        <div class="fig-title"><span class="fig-num">1-3</span>에이전트 일괄 차단 (옵션)</div>
+        <a href="img/ch3-bulk-block.png" target="_blank" rel="noopener"><img loading="lazy" src="img/ch3-bulk-block.png" alt="M365 관리 센터 - 에이전트 일괄 차단"></a>
+      </figure>
+      <div class="note">개별 에이전트가 아니라 <b>여러 에이전트를 한 번에</b> 차단해야 할 때는, <code>Microsoft 365 관리 센터 &gt; 에이전트 &gt; 모든 에이전트 &gt; 레지스트리</code>에서 ① 대상 에이전트를 <b>여러 개 선택</b>한 뒤 툴바의 <b>차단</b>을 누릅니다. ② <b>“N개의 에이전트 차단”</b> 확인 창에서 선택한 개수를 확인하고, 필요 시 <b>차단 이유(선택 사항)</b>를 남긴 뒤 ③ <b>확인</b>으로 일괄 적용합니다. 일괄 차단도 개별 차단과 동일하게 각 에이전트의 <b>Entra Agent ID가 비활성화</b>되어 사용자가 설치·사용할 수 없게 되며, 이미 설치된 경우 제거됩니다. <span class="hl-note">대량 선택 시 영향 범위가 크므로, 차단 전 대상 목록(소유자·게시 채널)을 한 번 더 확인하는 것이 좋습니다.</span></div><h2 class="ov-h step-h" id="step-ch3-2">2단계 · 차단 결과 확인</h2>
       <figure class="fig" id="s34">
         <div class="fig-title"><span class="fig-num">2-1</span>차단 결과 확인</div>
         
@@ -436,7 +446,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>사용자가 <b>사외(신뢰할 수 없는 네트워크)</b>에서 <b>Copilot Studio 에이전트</b>를 사용하지 못하도록 Entra 조건부 액세스 정책을 만들고, 실제 차단과 로그인 로그의 평가 결과를 확인하는 단계입니다. 접근 제어 대상이 클라우드 리소스가 아니라 에이전트 자체가 됩니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 역할 및 관리자 &gt; 조건부 액세스 관리자</td><td>정책 생성 전 조건부 액세스 관리자 역할 확인</td></tr><tr class="jump" data-target="step-ch4-1" tabindex="0"><td>1</td><td>사용자 차단 정책 생성</td><td>조건부 액세스 &gt; 정책 &gt; 새 정책 (사용자 / 대상 리소스 / 네트워크 / 액세스 제어)</td><td>모든 사용자 → Copilot Studio 에이전트, 사외(비신뢰 네트워크)에서 액세스 차단 → 정책 On</td></tr><tr class="jump" data-target="step-ch4-2" tabindex="0"><td>2</td><td>실제 차단·정책 평가 확인</td><td>Teams / M365 Copilot에서 에이전트 실행 후 Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</td><td>사외에서 Copilot Studio 에이전트 실행이 실제로 차단되는지, 로그인 로그의 CA 결과를 확인</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 역할 및 관리자 &gt; 조건부 액세스 관리자</td><td>정책 생성 전 조건부 액세스 관리자 역할 확인</td></tr><tr class="jump" data-target="step-ch4-1" tabindex="0"><td>1</td><td>사용자 차단 정책 생성</td><td>조건부 액세스 &gt; 정책 &gt; 새 정책 (사용자 / 대상 리소스 / 네트워크 / 액세스 제어)</td><td>모든 사용자 → Copilot Studio 에이전트, 사외(비신뢰 네트워크)에서 액세스 차단 → 정책 On</td></tr><tr class="jump" data-target="step-ch4-2" tabindex="0"><td>2</td><td>실제 차단·정책 평가 확인</td><td>Teams / M365 Copilot에서 에이전트 실행 후 Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</td><td>사외에서 Copilot Studio 에이전트 실행이 실제로 차단되는지, 로그인 로그의 CA 결과를 확인</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch4-1">1단계 · 사용자 차단 정책 생성</h2>
       <figure class="fig" id="sca1">
         <div class="fig-title"><span class="fig-num">1-1</span>사용자 차단 정책 생성 — 조건부 액세스 새 정책 만들기</div>
@@ -490,10 +500,10 @@ html[data-theme="dark"] .xref{color:var(--accent);}
     <div class="hero">
       <span class="tag">Chapter 5 · Microsoft Agent 365</span>
       <h1>5. 에이전트 리스크 탐지</h1>
-      <p>에이전트의 상호작용에서 발생하는 위험을 서로 다른 계층에서 탐지·수집하는 단계입니다. <b>Purview DLP</b>(민감 정보 유형이 포함된 프롬프트·메시지 차단), <b>Communication Compliance</b>(부적절·비윤리적 상호작용 및 기밀 공유 탐지), <b>내부 위험 관리(IRM)</b>(에이전트 활동 기반 위험 신호) 세 가지 정책을 만들고, 하나의 에이전트 활동에 대해 <b>DLP·CC·IRM 경고를 함께 확인</b>합니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다.</p>
+      <p>에이전트의 상호작용에서 발생하는 위험을 탐지·수집하는 단계입니다. <b>Purview DLP</b>(민감 정보 유형이 포함된 프롬프트·메시지 차단), <b>Communication Compliance</b>(부적절·비윤리적 상호작용 및 기밀 공유 탐지)로 개별 위반을 탐지·차단하고, <b>내부 위험 관리(IRM)</b>는 이 신호들을 포함한 활동을 상관분석해 <b>에이전트/사용자별 위험 점수</b>를 산정합니다. 실제로 High 심각도 DLP 경고 등은 IRM의 트리거·지표로 작동하므로, 하나의 에이전트 활동을 <b>DLP·CC 경고와 IRM 위험 점수로 연결해 확인</b>합니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr class="jump" data-target="step-ch5-0" tabindex="0"><td>0</td><td>감사 준비</td><td>Purview 포털 > 감사 > 감사 수집 상태 (+ 각 솔루션 역할)</td><td>감사 로그 수집 활성화(DLP·CC·IRM 경고 공통 전제), 관리자·분석가 역할 확보</td></tr><tr class="jump" data-target="step-ch5-1" tabindex="0"><td>1</td><td>DLP 정책 — Copilot</td><td>Purview > 데이터 손실 방지 > 정책<br>(Microsoft 365 Copilot·Copilot Chat 위치)</td><td>민감 정보 유형(SIT) 포함 프롬프트 처리 차단</td></tr><tr class="jump" data-target="step-ch5-2" tabindex="0"><td>2</td><td>DLP 정책 — Teams</td><td>Purview > 데이터 손실 방지 > 정책<br>(Teams 채팅·채널 메시지 위치)</td><td>SIT 포함 Teams 메시지 전송 차단 → 실제 차단·경고 생성 확인</td></tr><tr class="jump" data-target="step-ch5-3" tabindex="0"><td>3</td><td>커뮤니케이션 규정 준수 정책</td><td>Purview > 커뮤니케이션 규정 준수 > 정책<br>(AI 에이전트 비윤리적 상호작용 템플릿)</td><td>에이전트 상호작용의 부적절·비윤리·기밀 공유 탐지</td></tr><tr class="jump" data-target="step-ch5-4" tabindex="0"><td>4</td><td>IRM 에이전트 정책</td><td>Purview > 내부 위험 관리 > 정책 / 에이전트 경고</td><td>에이전트 활동 기반 위험 지표·경고, DLP·CC·IRM 3종 경고 교차 확인</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>단계</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr class="jump" data-target="step-ch5-0" tabindex="0"><td>0</td><td>감사 준비</td><td>Purview 포털 > 감사 > 감사 수집 상태 (+ 각 솔루션 역할)</td><td>감사 로그 수집 활성화(DLP·CC·IRM 경고 공통 전제), 관리자·분석가 역할 확보</td></tr><tr class="jump" data-target="step-ch5-1" tabindex="0"><td>1</td><td>DLP 정책 — Copilot</td><td>Purview > 데이터 손실 방지 > 정책<br>(Microsoft 365 Copilot·Copilot Chat 위치)</td><td>민감 정보 유형(SIT) 포함 프롬프트 처리 차단</td></tr><tr class="jump" data-target="step-ch5-2" tabindex="0"><td>2</td><td>DLP 정책 — Teams</td><td>Purview > 데이터 손실 방지 > 정책<br>(Teams 채팅·채널 메시지 위치)</td><td>SIT 포함 Teams 메시지 전송 차단 → 실제 차단·경고 생성 확인</td></tr><tr class="jump" data-target="step-ch5-3" tabindex="0"><td>3</td><td>커뮤니케이션 규정 준수 정책</td><td>Purview > 커뮤니케이션 규정 준수 > 정책<br>(AI 에이전트 비윤리적 상호작용 템플릿)</td><td>에이전트 상호작용의 부적절·비윤리·기밀 공유 탐지</td></tr><tr class="jump" data-target="step-ch5-4" tabindex="0"><td>4</td><td>IRM 에이전트 정책</td><td>Purview > 내부 위험 관리 > 정책 / 에이전트 경고</td><td>에이전트 활동 기반 위험 점수 산정, DLP·CC 신호를 상관분석해 위험 지표·경고 확인</td></tr><tr class="jump" data-target="step-ch5-5" tabindex="0"><td>5</td><td>리스크 탐지 (DSPM)</td><td>Purview > DSPM > 검색 > 앱 및 에이전트</td><td>에이전트별 보호 상태·위험 수준, 위험 상호작용·부적절 사용 보고서 확인</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch5-0">0단계 · 감사 준비</h2>
       <figure class="fig" id="s-audit">
         <div class="fig-title"><span class="fig-num">0-1</span>감사 준비 — 활성화 상태 확인</div>
@@ -549,12 +559,12 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         <div class="fig-title"><span class="fig-num">2-5</span>DLP 정책 생성(Teams) — 완료</div>
         <a href="img/dlp-tm-done.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dlp-tm-done.png" alt="DLP 정책 생성(Teams) — 완료"></a>
       </figure>
-      <div class="note">Teams용 DLP 정책 생성이 완료됩니다. Copilot용(1단계)과 Teams용(2단계)을 분리해 두면, 에이전트가 어느 표면(Copilot 채팅 / Teams 메시지)에서 민감정보를 다루는지에 따라 탐지·차단 지점을 명확히 구분할 수 있습니다.</div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-2v">DLP 실제 동작 확인 — Teams 차단 &amp; 경고</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">위에서 만든 <b>DLP-Teams 정책</b>이 실제로 어떻게 작동하는지, 데모 에이전트가 게시된 Teams 채팅에서 <b>신용카드 번호를 전송</b>해 검증한 결과입니다. 정책 생성만으로 끝나지 않고, 실제 차단 UX와 경고가 어떻게 나타나는지 확인합니다.</p>
+      <div class="note">Teams용 DLP 정책 생성이 완료됩니다. Copilot용(1단계)과 Teams용(2단계)을 분리해 두면, 에이전트가 어느 표면(Copilot 채팅 / Teams 메시지)에서 민감정보를 다루는지에 따라 탐지·차단 지점을 명확히 구분할 수 있습니다.</div>
       <figure class="fig" id="dlp-tm-block">
         <div class="fig-title"><span class="fig-num">2-6</span>실제 동작 — Teams 메시지 전송 차단</div>
         <a href="img/dlp-tm-block.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dlp-tm-block.png" alt="실제 동작 — Teams 메시지 전송 차단"></a>
       </figure>
-      <div class="note">데모 에이전트(<code>Agent365-Guide-Demo</code>)가 게시된 Teams 채팅에 <code>Credit Card Number</code> 패턴(테스트용 카드번호)을 보내자, <b>메시지가 즉시 차단</b>되고 <b>“조직 정책으로 인해 메시지가 차단되었습니다”</b> 안내와 함께 위반한 SIT <b>Credit Card Number</b>가 표시됩니다. 에이전트에 전달되기 전에 <b>메시지 자체가 전송 차단</b>된 것으로, 에이전트 자체 안전거부와는 구분되는 <b>DLP 계층의 실제 차단</b>입니다.<br><br><span class="hl-note">팁: 맥락(설명 문장) 없이 카드번호만 단독으로 보내면 SIT가 더 정확히 매칭됩니다.</span></div>
+      <div class="note">데모 에이전트(<code>Agent365-Guide-Demo</code>)가 게시된 Teams 채팅에 <code>Credit Card Number</code> 패턴(테스트용 카드번호)을 보내자, <b>메시지가 즉시 차단</b>되고 <b>“조직 정책으로 인해 메시지가 차단되었습니다”</b> 안내와 함께 위반한 SIT <b>Credit Card Number</b>가 표시됩니다. 에이전트에 전달되기 전에 <b>메시지 자체가 전송 차단</b>된 것으로, 에이전트 자체 안전거부와는 구분되는 <b>DLP 계층의 실제 차단</b>입니다.</div>
       <figure class="fig" id="dlp-tm-alert">
         <div class="fig-title"><span class="fig-num">2-7</span>실제 동작 — Purview DLP 경고 생성</div>
         <a href="img/dlp-tm-alert.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dlp-tm-alert.png" alt="실제 동작 — Purview DLP 경고 생성"></a>
@@ -574,12 +584,12 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         <div class="fig-title"><span class="fig-num">3-3</span>커뮤니케이션 규정 준수 정책 생성 — 완료</div>
         <a href="img/cc-done.png" target="_blank" rel="noopener"><img loading="lazy" src="img/cc-done.png" alt="커뮤니케이션 규정 준수 정책 생성 — 완료"></a>
       </figure>
-      <div class="note">커뮤니케이션 규정 준수 정책 생성이 완료됩니다. <b>정책 활성화에 최대 1시간, 통신 캡처(경고 생성)에 최대 24시간</b>이 소요됩니다.</div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3v">CC 실제 동작 확인 — 검토 큐 항목</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">DLP가 <b>차단</b>이라면, 커뮤니케이션 규정 준수(CC)는 <b>탐지·검토</b> 방식입니다. 정책이 매칭한 에이전트 상호작용이 실제로 검토 큐에 어떻게 올라오는지 확인합니다.</p>
+      <div class="note">커뮤니케이션 규정 준수 정책 생성이 완료됩니다. <b>정책 활성화에 최대 1시간, 통신 캡처(경고 생성)에 최대 24시간</b>이 소요됩니다.</div>
       <figure class="fig" id="cc-result">
         <div class="fig-title"><span class="fig-num">3-4</span>실제 동작 — 검토 큐(보류 중) 항목</div>
         <a href="img/cc-result.png" target="_blank" rel="noopener"><img loading="lazy" src="img/cc-result.png" alt="실제 동작 — 검토 큐(보류 중) 항목"></a>
       </figure>
-      <div class="note">CC는 메시지를 차단하지 않고, 정책이 매칭한 에이전트 상호작용을 <code>정책 &gt; 보류 중(Pending)</code> 큐로 올립니다. 검토자는 항목을 열어 <b>검색된 조건</b>, <b>프롬프트·응답</b>, <b>사용자 활동</b>을 확인하고 <b>해결·에스컬레이션·태그·알림</b>으로 조치합니다. 이 예시 항목은 <b>Prompt Shields</b> 조건으로 탐지되었습니다(적대적 입력 탐지).<br><br><span class="hl-note">참고: 이 정책 템플릿의 분류기는 금융 규정 계열 + Prompt Shields로, 한국어 유해·위협 텍스트를 잡으려면 <b>Threat·Harassment 등 부적절한 텍스트 분류기</b>(한국어 지원)가 포함된 정책을 별도로 구성해야 합니다.</span></div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · IRM 에이전트 정책</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">Purview <b>내부 위험 관리(IRM)</b>에서 에이전트 정책을 만들어 활동 기반 위험 신호를 수집하고 경고를 확인합니다. DLP·CC·IRM은 서로 다른 계층의 신호로, 하나의 에이전트 활동에 대해 <b>세 가지 경고를 교차로 확인</b>할 수 있습니다.</p>
+      <div class="note">CC는 메시지를 차단하지 않고, 정책이 매칭한 에이전트 상호작용을 <code>정책 &gt; 보류 중(Pending)</code> 큐로 올립니다. 검토자는 항목을 열어 <b>검색된 조건</b>, <b>프롬프트·응답</b>, <b>사용자 활동</b>을 확인하고 <b>해결·에스컬레이션·태그·알림</b>으로 조치합니다. 이 예시 항목은 <b>Prompt Shields</b> 조건으로 탐지되었습니다(적대적 입력 탐지).</div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · IRM 에이전트 정책</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">Purview <b>내부 위험 관리(IRM)</b>에서 에이전트 정책을 만들어 활동 기반 위험 신호를 수집하고 경고를 확인합니다. DLP·CC가 개별 위반을 <b>탐지·차단</b>하는 계층이라면, IRM은 이 신호들을 포함한 여러 활동을 <b>상관분석해 사용자별 위험 점수</b>를 산정하는 계층입니다. 실제로 <b>High 심각도 DLP 경고</b> 등은 IRM 정책의 <b>트리거·지표</b>로 작동하므로, 하나의 에이전트 활동을 DLP·CC 경고와 IRM 위험 점수로 <b>연결해 확인</b>할 수 있습니다.</p>
       <figure class="fig" id="s50">
         <div class="fig-title"><span class="fig-num">4-1</span>에이전트 정책 생성</div>
         
@@ -673,7 +683,32 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         <div class="fig-title"><span class="fig-num">4-16</span>에이전트 경고 확인 — 활동 탐색기 (활동·프롬프트·응답 세부)</div>
         <a href="img/irm-3-3.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-3.png" alt="활동 탐색기 - 활동·프롬프트·응답 세부"></a>
       </figure>
-      <div class="note">① <b>활동 탐색기</b>에서 개별 활동을 선택하면 우측 상세 패널에 <b>활동 세부 정보</b>(작업·워크로드·AI 애플리케이션)와 함께, ② <b>프롬프트 세부 정보</b>(실제 입력 프롬프트·프롬프트 ID), ③ <b>응답 세부 사항</b>(응답 ID·중요한 정보 유형)이 표시됩니다. 이를 통해 <b>어떤 프롬프트가 어떤 응답·리소스로 이어졌는지</b>를 활동 종류별로 추적할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span></div>
+      <div class="note">① <b>활동 탐색기</b>에서 개별 활동을 선택하면 우측 상세 패널에 <b>활동 세부 정보</b>(작업·워크로드·AI 애플리케이션)와 함께, ② <b>프롬프트 세부 정보</b>(실제 입력 프롬프트·프롬프트 ID), ③ <b>응답 세부 사항</b>(응답 ID·중요한 정보 유형)이 표시됩니다. 이를 통해 <b>어떤 프롬프트가 어떤 응답·리소스로 이어졌는지</b>를 활동 종류별로 추적할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span></div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-5">5단계 · 리스크 탐지 (DSPM)</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">앞의 DLP·CC·IRM이 개별 정책으로 위반을 탐지·차단한다면, <b>데이터 보안 상태 관리(DSPM)</b>는 이 신호들을 한곳에 모아 <b>에이전트별 보호 상태·위험 수준</b>을 한눈에 보여줍니다. Purview DSPM의 <b>앱 및 에이전트</b>에서 에이전트 보고서를 열어 위험 상호작용과 부적절한 사용을 확인합니다.</p>
+      <figure class="fig" id="dspm-5-1">
+        <div class="fig-title"><span class="fig-num">5-1</span>에이전트 보고서 확인</div>
+        <a href="img/dspm-5-1.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dspm-5-1.png" alt="에이전트 보고서 확인"></a>
+      </figure>
+      <div class="note"><code>Purview &gt; DSPM &gt; 검색 &gt; 앱 및 에이전트</code>에서 ① 좌측 레일의 <b>DSPM</b> → ② <b>검색</b> → ③ <b>앱 및 에이전트</b>로 이동한 뒤 ④ <b>에이전트</b> 탭을 엽니다. ⑤ 목록 위의 <b>에이전트 보고서</b>를 선택하고, ⑥ 오른쪽 패널에서 보고서 유형(가장 활발한 / 가장 최근 / 사용자가 가장 많은 / 위험 수준이 높은 사용자가 쓰는 에이전트)을 고른 뒤 ⑦ <b>보고서 보기</b>를 누릅니다. 목록에서는 각 에이전트의 <b>보호 상태</b>(모니터링됨)와 <b>위험 수준</b>(High 등)을 바로 확인할 수 있습니다.</div>
+      <figure class="fig" id="dspm-5-1b">
+        <div class="fig-title"><span class="fig-num">5-2</span>에이전트 보고서 — 위험 상호작용·부적절 사용</div>
+        <a href="img/dspm-report-detail1.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dspm-report-detail1.png" alt="에이전트 보고서 — 위험 상호작용·부적절 사용"></a>
+      </figure>
+      <div class="note">보고서에서 <b>개별 에이전트</b>를 선택하면 세부 페이지가 열립니다. 여기서 해당 에이전트의 <b>위험한 상호작용 경고</b>(위험한 AI 사용 기록이 있는 사용자)와 <b>부적절한 사용</b>(프롬프트·응답에서 탐지된 Threat·Targeted Harassment 등 비윤리적 인스턴스)을 확인할 수 있습니다.</div>
+      <figure class="fig" id="dspm-5-1c">
+        <div class="fig-title"><span class="fig-num">5-3</span>에이전트 보고서 — 참여 인사이트</div>
+        <a href="img/dspm-report-detail2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dspm-report-detail2.png" alt="에이전트 보고서 — 참여 인사이트"></a>
+      </figure>
+      <div class="note">아래로 내리면 <b>시간 경과에 따라 생성된 응답</b> 추이 차트와 <b>참여 인사이트</b>(평균/일일 프롬프트·응답 수, 상위 사용자 활동, 프롬프트·응답의 중요한 데이터 비율)가 표시됩니다. 에이전트의 실제 사용량과 민감 데이터 노출 비중을 한 화면에서 파악할 수 있습니다.</div>
+      <figure class="fig" id="dspm-5-2">
+        <div class="fig-title"><span class="fig-num">5-4</span>활동 탐색기 확인</div>
+        <a href="img/dspm-5-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dspm-5-2.png" alt="활동 탐색기 확인"></a>
+      </figure>
+      <div class="note"><code>DSPM &gt; 검색 &gt; ① 활동 탐색기</code>에서 ② <b>AI 활동</b> 탭을 열면 <b>AI 상호작용(프롬프트·응답)</b>과 중요한 정보 유형이 포함된 활동을 시계열로 검토할 수 있습니다.</div>
+      <figure class="fig" id="dspm-5-2b">
+        <div class="fig-title"><span class="fig-num">5-5</span>활동 탐색기 — 상호작용 세부 (프롬프트·응답)</div>
+        <a href="img/dspm-activity-detail.png" target="_blank" rel="noopener"><img loading="lazy" src="img/dspm-activity-detail.png" alt="활동 탐색기 — 상호작용 세부 (프롬프트·응답)"></a>
+      </figure>
+      <div class="note">목록에서 개별 항목을 선택하면 오른쪽 패널에서 해당 상호작용의 <b>프롬프트와 응답 원문</b>, <b>탐지된 민감 정보</b>, <b>액세스된 리소스(AI 앱)</b> 등을 확인할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span></div>
     <div class="pagenav"><a class="prv" href="#ch4" data-go="ch4"><span class="lbl">← 이전</span><br>4. 에이전트에 대한 기본 접근제어</a><a class="nxt" href="#ch6" data-go="ch6"><span class="lbl">다음 →</span><br>6. 에이전트 리스크 기반 접근제어</a></div>
   </section>
 
@@ -684,7 +719,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>에이전트가 접근하는 클라우드 앱·커넥터 리소스를 대상으로 조건부 액세스 정책을 적용하고, 위치·네트워크 등 리스크 신호에 따라 허용/차단을 제어한 뒤 로그인 로그로 평가 결과를 검증하는 단계입니다. 앞의 기본 접근제어가 에이전트 자체를 대상으로 했다면, 여기서는 에이전트가 호출하는 리소스(클라우드 앱)를 대상으로 접근을 통제합니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>조건부 액세스 관리자 추가</td></tr><tr class="jump" data-target="step-ch6-1" tabindex="0"><td>1</td><td>대상 정책 생성</td><td>조건부 액세스 &gt; 정책 &gt; 새 정책<br>에이전트 / 대상 리소스 / 권한 부여</td><td>Agent ID·실제 커넥터 리소스 지정</td></tr><tr class="jump" data-target="step-ch6-2" tabindex="0"><td>2</td><td>정책 평가 확인</td><td>Teams에서 에이전트 및 커넥터 실행<br>Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</td><td>Agent ID·리소스·시각·CA 결과 대조<br>(Report-only는 실제 차단하지 않음)</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>조건부 액세스 관리자 추가</td></tr><tr class="jump" data-target="step-ch6-1" tabindex="0"><td>1</td><td>대상 정책 생성</td><td>조건부 액세스 &gt; 정책 &gt; 새 정책<br>에이전트 / 대상 리소스 / 권한 부여</td><td>Agent ID·실제 커넥터 리소스 지정</td></tr><tr class="jump" data-target="step-ch6-2" tabindex="0"><td>2</td><td>정책 평가 확인</td><td>Teams에서 에이전트 및 커넥터 실행<br>Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</td><td>Agent ID·리소스·시각·CA 결과 대조<br>(Report-only는 실제 차단하지 않음)</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch6-1">1단계 · 대상 정책 생성</h2>
       <figure class="fig" id="s39">
         <div class="fig-title"><span class="fig-num">1-1</span>대상 정책 생성</div>
@@ -750,7 +785,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>Defender AI 보안과 Power Platform 위협 탐지를 연결해, Copilot Studio 에이전트의 도구 호출·프롬프트를 실시간으로 검사하고 차단하는 단계입니다. 커넥터 설정 → 인증용 앱 생성 → 환경 연결 → 보호 정책 순으로 진행합니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택<br>Power Platform 관리 센터 &gt; 사용자 관리 &gt; 관리자 지정</td><td>애플리케이션 관리자, 보안 관리자 추가<br>Power Platform 관리자 추가</td></tr><tr class="jump" data-target="step-ch7-1" tabindex="0"><td>1</td><td>M365 커넥터 설정</td><td>Defender &gt; 설정 &gt; AI 보안 &gt; 시작 &gt; Microsoft 365 커넥터</td><td>Agent 365·Microsoft 365 연결 확인<br>Entra 관리 이벤트·M365 활동 수집</td></tr><tr class="jump" data-target="step-ch7-2" tabindex="0"><td>2</td><td>Copilot Studio 보안 설정</td><td>Defender &gt; 설정 &gt; AI 보안 &gt; 시작 &gt; Copilot Studio</td><td></td></tr><tr class="jump" data-target="step-ch7-3" tabindex="0"><td>3</td><td>인증용 앱 구성</td><td>Entra &gt; 앱 등록 &gt; 인증서 &amp; 비밀 &gt; 페더레이션된 자격 증명</td><td>연결용 App ID·공식 인코딩 형식 구성</td></tr><tr class="jump" data-target="step-ch7-4" tabindex="0"><td>4</td><td>PowerPlatform 보안 설정</td><td>Power Platform &gt; 보안 &gt; 위협 탐지 &gt;추가 위협 탐지 &gt; 환경 &gt; 설정</td><td>App ID·Endpoint·데이터 공유 설정<br>오류 시 Allow / Block 선택 후 저장</td></tr><tr class="jump" data-target="step-ch7-5" tabindex="0"><td>5</td><td>런타임 보호 정책 설정</td><td>Defender &gt; 설정 &gt; AI 보안 &gt; 정책 및 규칙 </td><td>Default는 Audit, 사용자 지정은 Block<br>단, 현재까지 Copilot Studio 에이전트의 차단 기록은 로그로 조회되지 않음</td></tr><tr class="jump" data-target="step-ch7-6" tabindex="0"><td>6</td><td>런타임 탐지 시나리오</td><td>Defender &gt; 사건 &amp; 경고 / 고급 헌팅(AgentsInfo·CloudAppEvents)</td><td>실제 에이전트 실행에서 발생한 위험 신호를 준실시간 탐지·조사</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택<br>Power Platform 관리 센터 &gt; 사용자 관리 &gt; 관리자 지정</td><td>애플리케이션 관리자, 보안 관리자 추가<br>Power Platform 관리자 추가</td></tr><tr class="jump" data-target="step-ch7-1" tabindex="0"><td>1</td><td>M365 커넥터 설정</td><td>Defender &gt; 설정 &gt; AI 보안 &gt; 시작 &gt; Microsoft 365 커넥터</td><td>Agent 365·Microsoft 365 연결 확인<br>Entra 관리 이벤트·M365 활동 수집</td></tr><tr class="jump" data-target="step-ch7-2" tabindex="0"><td>2</td><td>Copilot Studio 보안 설정</td><td>Defender &gt; 설정 &gt; AI 보안 &gt; 시작 &gt; Copilot Studio</td><td></td></tr><tr class="jump" data-target="step-ch7-3" tabindex="0"><td>3</td><td>인증용 앱 구성</td><td>Entra &gt; 앱 등록 &gt; 인증서 &amp; 비밀 &gt; 페더레이션된 자격 증명</td><td>연결용 App ID·공식 인코딩 형식 구성</td></tr><tr class="jump" data-target="step-ch7-4" tabindex="0"><td>4</td><td>PowerPlatform 보안 설정</td><td>Power Platform &gt; 보안 &gt; 위협 탐지 &gt;추가 위협 탐지 &gt; 환경 &gt; 설정</td><td>App ID·Endpoint·데이터 공유 설정<br>오류 시 Allow / Block 선택 후 저장</td></tr><tr class="jump" data-target="step-ch7-5" tabindex="0"><td>5</td><td>런타임 보호 정책 설정</td><td>Defender &gt; 설정 &gt; AI 보안 &gt; 정책 및 규칙 </td><td>Default는 Audit, 사용자 지정은 Block<br>단, 현재까지 Copilot Studio 에이전트의 차단 기록은 로그로 조회되지 않음</td></tr><tr class="jump" data-target="step-ch7-6" tabindex="0"><td>6</td><td>런타임 탐지</td><td>Defender &gt; 사건 &amp; 경고 / 고급 헌팅(AgentsInfo·CloudAppEvents)</td><td>실제 에이전트 실행에서 발생한 위험 신호를 준실시간 탐지·조사</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch7-1">1단계 · M365 커넥터 설정</h2>
       <figure class="fig" id="s66">
         <div class="fig-title"><span class="fig-num">1-1</span>M365 커넥터 설정 — 진입</div>
@@ -846,19 +881,19 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         <a href="img/slide-80.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-80.png" alt="런타임 보호 정책 설정 — 프롬프트 증거 수집"></a>
       </figure>
       <div class="note"><b>프롬프트 증거 수집</b> 설정입니다. 켜면 경고 조사 시 실제 프롬프트 내용을 근거로 볼 수 있지만, 프롬프트 본문이 저장되므로 민감정보 취급 정책과 함께 검토해야 합니다.</div>
-      <h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch7-6">6단계 · 런타임 탐지 시나리오</h2>
+      <h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch7-6">6단계 · 런타임 탐지</h2>
       <figure class="fig" id="s80-2">
-        <div class="fig-title"><span class="fig-num">6-1</span>런타임 탐지 시나리오 — 탐지 경고 목록 (Defender 경고)</div>
+        <div class="fig-title"><span class="fig-num">6-1</span>런타임 탐지 — 탐지 경고 목록 (Defender 경고)</div>
         <a href="img/rt-alerts.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-alerts.png" alt="Defender 경고 목록 - AI 탐지"></a>
       </figure>
       <div class="note"><code>Defender 포털 &gt; 사건 &amp; 경고 &gt; 경고</code>에서 준실시간 탐지 결과를 확인합니다. 조회 기간과 경고 건수를 확인하고, 목록에서 <b>AI agent abuse</b>·<b>프롬프트 인젝션(XPIA)</b> 등 AI 관련 경고를 찾습니다. Defender는 Agent 365 관측 데이터를 분석해 <b>탈옥(jailbreak)·간접 프롬프트 인젝션·악성 콘텐츠 전파·비밀 유출·회피 기법·LLM 정찰·의심 IP 접근</b> 등을 탐지합니다.</div>
       <figure class="fig" id="s80-3">
-        <div class="fig-title"><span class="fig-num">6-2</span>런타임 탐지 시나리오 — 경고 세부사항 (활동 세부 정보 필드)</div>
+        <div class="fig-title"><span class="fig-num">6-2</span>런타임 탐지 — 경고 세부사항 (활동 세부 정보 필드)</div>
         <a href="img/rt-detail.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-detail.png" alt="경고 세부사항 - 에이전트·활동·증거"></a>
       </figure>
       <div class="note">경고를 클릭한 뒤 <b>활동 세부 정보</b> 탭을 열면(위 화면), 해당 탐지의 원천 데이터를 필드 단위로 확인할 수 있습니다. 대표 필드는 다음과 같습니다.<br><br>• <b>에이전트 식별</b> — <code>AgentName</code>·<code>AgentID</code>·<code>PlatformAgentType</code>(예: AzureAIFoundry)·<code>AgentBlueprintID</code>·<code>ChannelName</code>(예: msteams:COPILOT): <b>어떤 에이전트가 어떤 플랫폼·채널에서</b> 동작했는지<br>• <b>세션·요청</b> — <code>ConversationId</code>·<code>RequestId</code>·<code>ResponseId</code>·<code>RequestMessages</code>: 실제 <b>요청/응답과 대화 맥락</b><br>• <b>도구 호출</b> — <code>ToolName</code>(예: mcp_WorkIQWord.GetDocumentContent)·<code>ToolType</code>·<code>ToolID</code>·<code>ToolOutput</code>: 에이전트가 호출한 <b>도구와 그 출력</b>(주입 콘텐츠 포함)<br>• <b>위협 분류</b> — <code>MitreAtlasTactics/Techniques</code>·<code>OWASPCategory</code>·<code>PotentialCauses</code>: <b>어떤 공격 기법·원인</b>으로 분류됐는지<br><br>즉 이 탭 하나에서 <b>어떤 에이전트가, 어떤 채널에서, 어떤 도구를 호출해, 어떤 위협으로 탐지됐는지</b>를 한 번에 파악할 수 있습니다. 우측 <b>세부 정보</b> 패널에서는 심각도·상태·경고 ID·범주 등 경고 메타데이터를 확인합니다.</div>
       <figure class="fig" id="s80-4">
-        <div class="fig-title"><span class="fig-num">6-3</span>런타임 탐지 시나리오 — AgentsInfo 조인 (에이전트 컨텍스트 보강)</div>
+        <div class="fig-title"><span class="fig-num">6-3</span>런타임 탐지 — AgentsInfo 조인 (에이전트 컨텍스트 보강)</div>
         <a href="img/rt-agentsinfo.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-agentsinfo.png" alt="고급 헌팅 — AlertEvidence를 AgentsInfo와 EntraAgentID로 조인해 탐지에 에이전트 컨텍스트를 보강"></a>
         <figcaption class="fig-cap">위 화면은 <b>XPIA(간접 프롬프트 인젝션) 경고</b>를 <code>EntraAgentID</code>로 조인해, 탐지된 에이전트(<code>foundry-ops</code>)의 <b>소유자·상태(Active)·도구(web_search)</b>를 함께 확인한 결과입니다.</figcaption>
       </figure>
@@ -883,7 +918,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
           Owners, DeclaredTools, McpServers, Permissions
 | order by Name asc</code></pre></div>
       <figure class="fig" id="s80-5">
-        <div class="fig-title"><span class="fig-num">6-4</span>런타임 탐지 시나리오 — CloudAppEvents (고급 헌팅)</div>
+        <div class="fig-title"><span class="fig-num">6-4</span>런타임 탐지 — CloudAppEvents (고급 헌팅)</div>
         <a href="img/rt-cloudapp.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-cloudapp.png" alt="고급 헌팅 CloudAppEvents"></a>
       </figure>
       <div class="note"><code>CloudAppEvents</code> 테이블(Agent 365 관측 데이터)을 <code>ActionType == "ExecuteToolByGateway"</code>로 필터링해 에이전트의 <b>실제 도구 호출</b>을 조회합니다. 경고(<code>AlertInfo</code>)·증거(<code>AlertEvidence</code>)와 상관 분석하면 하나의 실행 흐름을 재구성할 수 있습니다.<br><br><b>주요 컬럼과 조회 가능 정보</b><br>• <code>Timestamp</code> — 도구 호출 시각<br>• <code>ActionType</code> — 작업 유형(에이전트 도구 호출은 <code>ExecuteToolByGateway</code>)<br>• <code>Application</code>·<code>AccountDisplayName</code>·<code>AccountObjectId</code> — 어떤 앱·실행 계정이 호출했는지<br>• <code>IPAddress</code>·<code>CountryCode</code> — 호출 출처 IP·국가<br>• <code>RawEventData</code> — 도구 호출의 원천 JSON. 여기에 <code>ToolServerName</code>(MCP 서버명)·<code>ServerAddress</code>·<code>AgentName</code>·<code>ToolName</code>·<code>ToolDescription</code>·<code>Operation</code>·<code>ErrorMessage</code> 등 <b>실제 호출된 도구와 파라미터·결과</b>가 담깁니다<br>이를 통해 <b>어떤 에이전트가 어떤 MCP 도구를, 어디서(IP·국가), 어떤 앱·계정으로 호출했는지</b>를 활동 단위로 추적할 수 있습니다. <span class="hl-note">참고: 실시간 보호의 감사·차단 동작은 <code>BehaviorInfo</code>에 기록되지만, <b>Copilot Studio 에이전트의 차단 이벤트는 아직 지원되지 않습니다</b>.</span></div>
@@ -914,7 +949,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <p>Global Secure Access for Agents(preview)를 환경 단위로 켜고, Entra의 Gen AI 인사이트 로그에서 에이전트가 주고받은 실제 트래픽(요청·응답)을 조회하는 단계입니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
-    <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>전역 보안 액세스 관리자 추가</td></tr><tr class="jump" data-target="step-ch8-1" tabindex="0"><td>1</td><td>Power Platform 설정</td><td>Power Platform &gt; 보안 &gt; ID 및 액세스 &gt; 에이전트에 대한 전역 보안 액세스</td><td>실습 환경 선택 → Enable On → Save<br>환경 단위 적용; 다른 에이전트 영향 확인</td></tr><tr class="jump" data-target="step-ch8-2" tabindex="0"><td>2</td><td>로그 조회</td><td>Entra &gt; 전역 보안 액세스 &gt; 모니터링 &gt; Gen AI 인사이트 로그</td><td>Event ID·Transaction ID로 상관 분석</td></tr></tbody></table></div>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>전역 보안 액세스 관리자 추가</td></tr><tr class="jump" data-target="step-ch8-1" tabindex="0"><td>1</td><td>Power Platform 설정</td><td>Power Platform &gt; 보안 &gt; ID 및 액세스 &gt; 에이전트에 대한 전역 보안 액세스</td><td>실습 환경 선택 → Enable On → Save<br>환경 단위 적용; 다른 에이전트 영향 확인</td></tr><tr class="jump" data-target="step-ch8-2" tabindex="0"><td>2</td><td>로그 조회</td><td>Entra &gt; 전역 보안 액세스 &gt; 모니터링 &gt; Gen AI 인사이트 로그</td><td>Event ID·Transaction ID로 상관 분석</td></tr></tbody></table></div>
     <h2 class="ov-h step-h" id="step-ch8-1">1단계 · Power Platform 설정</h2>
       <figure class="fig" id="s82">
         <div class="fig-title"><span class="fig-num">1-1</span>Power Platform 설정</div>
@@ -943,10 +978,52 @@ html[data-theme="dark"] .xref{color:var(--accent);}
       <figure class="fig" id="s86">
         <div class="fig-title"><span class="fig-num">2-2</span>로그 조회 — Gen AI 인사이트 로그</div>
         
-        <div class="ph">스크린샷 준비 중 — 로그 수집 후 추가 예정</div>
+        <a href="img/slide-86.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-86.png" alt="로그 조회 — Gen AI 인사이트 로그"></a>
       </figure>
       <div class="note"><b>Gen AI 인사이트 로그</b>에서 에이전트가 실제로 주고받은 트래픽을 조회합니다. <b>Event ID·Transaction ID로 상관 분석</b>하면 하나의 실행에 대한 요청·응답을 이어서 볼 수 있으며, MCP <code>tools/call</code>의 요청 본문과 응답까지 확인할 수 있습니다. 로그 반영에는 지연이 있을 수 있습니다.</div>
-    <div class="pagenav"><a class="prv" href="#ch7" data-go="ch7"><span class="lbl">← 이전</span><br>7. 에이전트 런타임 보호</a><span class="pn-empty"></span></div>
+    <div class="pagenav"><a class="prv" href="#ch7" data-go="ch7"><span class="lbl">← 이전</span><br>7. 에이전트 런타임 보호</a><a class="nxt" href="#ch10" data-go="ch10"><span class="lbl">다음 →</span><br>9. 에이전트 폐기</a></div>
+  </section>
+
+  <section id="ch10" class="page">
+    <div class="hero">
+      <span class="tag">Chapter 9 · Microsoft Agent 365</span>
+      <h1>9. 에이전트 폐기</h1>
+      <p>에이전트 수명주기의 마지막 단계로, 더 이상 필요 없거나 위험한 에이전트를 안전하게 제거하고 신원·연결 리소스를 정리하는 단계입니다. <b>폐기 대상(장기 미사용·소유자 없는·고위험 에이전트) 선정</b>은 <b>2장(인벤토리 확인)</b>·<b>5장(리스크 탐지)</b>을, 임시 사용 중지(차단)는 <b>3장(에이전트 차단)</b>을 참고하세요. <b>영구 삭제는 되돌릴 수 없으므로</b>, 먼저 감사·기록을 보존한 뒤 삭제하고, 마지막으로 잔존 신원·권한을 정리하는 순서로 진행합니다.</p>
+    </div>
+    <h2 class="ov-h">전체 순서 한눈에 보기</h2>
+    <div class="tw ov-wide"><table><thead><tr><th>#</th><th>단계</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가<br>Power Platform 관리 센터 &gt; 환경 &gt; 역할<br>Purview 포털 &gt; 설정 &gt; 역할 및 범위 &gt; 역할 그룹</td><td>에이전트 ID 관리자 추가<br>환경 시스템 관리자 지정<br>감사 로그 · eDiscovery 관리자 역할 그룹 추가</td></tr><tr class="jump" data-target="step-ch10-1" tabindex="0"><td>1</td><td>폐기 전 로그·기록 보존</td><td>Purview &gt; 감사(Audit) / eDiscovery / 데이터 수명 주기 관리</td><td>영구 삭제 전에 상호작용·프롬프트·응답·transcript를 감사 로그·eDiscovery 보류로 확보(삭제는 되돌릴 수 없음)</td></tr><tr class="jump" data-target="step-ch10-2" tabindex="0"><td>2</td><td>에이전트 삭제</td><td>Copilot Studio 메이커 포털</td><td>Copilot Studio 에이전트는 메이커 포털에서 삭제 = 즉시 영구 삭제(30일 복구 창·‘삭제된 에이전트’ 탭 없음). 관리 센터 ‘제거’는 Uninstall이지 삭제 아님</td></tr><tr class="jump" data-target="step-ch10-3" tabindex="0"><td>3</td><td>Entra Agent ID·연결 리소스 정리</td><td>Entra 관리 센터 &gt; 엔터프라이즈 앱 / 앱 등록</td><td>잔존 Agent ID(서비스 주체)·app registration·커넥터 권한을 수동 확인·제거(조건부 액세스로 자동 제거 실패 시 필수)</td></tr></tbody></table></div>
+    <div class="ref-card" style="margin-bottom:28px;"><p style="margin:0 0 6px;font-size:15px;"><b>먼저 — 폐기 조치 3단계(제거 → 삭제 → 영구 삭제) 구분</b></p><p style="margin:0 0 10px;font-size:14px;color:var(--text-soft);">에이전트 폐기는 비슷해 보이지만 강도가 다른 세 조치로 나뉩니다 — <b>제거(가용성 회수)</b> → <b>삭제(제거 + 복구 가능)</b> → <b>영구 삭제(완전 제거)</b>. 이와 별개로 <b>차단</b>은 폐기가 아니라 임시 중지(언제든 해제)입니다. 특히 관리 센터 메뉴의 <b>제거(Remove)</b>는 <b>설치 제거(Uninstall)</b>일 뿐 에이전트를 <b>삭제하지 않습니다</b>.</p><div class="tw tw-fields"><table><thead><tr><th>조치</th><th>강도</th><th>실제 동작</th><th>되돌리기</th><th>에이전트 객체</th></tr></thead><tbody><tr><td><b>(참고) 차단</b><br>Block</td><td>임시</td><td>조직 전체 사용 금지(가용성만 회수) — <b>폐기 아님</b></td><td>차단 해제로 즉시 복구</td><td>유지</td></tr><tr><td><b>① 제거</b><br>Remove = Uninstall</td><td>약</td><td>설치 제거 — 조직/사용자가 설치·사용 불가. 객체·데이터는 그대로 남음</td><td>재설치(Install)로 복구</td><td>유지</td></tr><tr><td><b>② 삭제</b><br>Delete</td><td>중</td><td>에이전트 객체 제거. 플랫폼에 따라 <b>소프트 삭제(30일 복구 창)</b> 또는 즉시 영구 삭제</td><td>30일 내 복원(소프트 삭제인 경우만)</td><td>삭제(보존 또는 즉시 제거)</td></tr><tr><td><b>③ 영구 삭제</b><br>Permanently delete</td><td>강</td><td>객체·연결 리소스까지 완전 제거</td><td><b>불가(되돌릴 수 없음)</b></td><td>완전 제거</td></tr></tbody></table></div><p style="margin:12px 0 0;font-size:13px;color:var(--text-soft);"><b>플랫폼에 따라 ②삭제의 동작이 다릅니다.</b> <b>Foundry·Agent Builder</b> 등 관리 센터에서 관리되는 에이전트는 관리 센터 레지스트리의 <b>삭제(Delete)</b>가 <b>소프트 삭제(30일)</b>로 동작해 ‘삭제된 에이전트’ 탭으로 이동하고, 거기서 복원 또는 영구 삭제합니다. 반면 <b>이 가이드의 대상인 Copilot Studio 에이전트</b>는 관리 센터에 삭제(Delete)가 없고 <b>제거(Uninstall)·차단</b>만 제공되며, 실제 삭제는 <b>Copilot Studio 메이커 포털</b>에서 하는데 이는 <b>곧바로 영구 삭제(30일 복구 창·‘삭제된 에이전트’ 탭 없음)</b>입니다. 단, 삭제로 함께 제거되는 <b>Entra Agent ID(서비스 주체)</b>는 Entra <b>디렉터리 휴지통에 30일</b> 보존되어 그 기간 내 복원할 수 있습니다. <b>Start/Stop</b>(Azure 인프라 제어)은 Foundry 전용입니다.</p><div class="ref-links"><b>근거:</b> <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-365/admin/manage/agent-actions' target='_blank' rel='noopener'>관리 센터 에이전트 거버넌스·수명주기 액션(공식 문서)</a> · <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-first-bot' target='_blank' rel='noopener'>Copilot Studio 에이전트 삭제(공식 문서)</a></div></div><h2 class="ov-h step-h" id="step-ch10-1">1단계 · 폐기 전 로그·기록 보존</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">영구 삭제는 되돌릴 수 없고, 에이전트 삭제 시 관련 데이터가 함께 정리될 수 있습니다. 따라서 폐기 결정 후 <b>가장 먼저</b> 해당 에이전트의 상호작용 기록을 확보합니다. Agent 365 에이전트는 생성 시 자동으로 감사가 활성화되어 프롬프트·응답이 통합 감사 로그에 기록됩니다.</p>
+      <figure class="fig" id="decom-1-1">
+        <div class="fig-title"><span class="fig-num">1-1</span>감사 로그에서 에이전트 상호작용 확인</div>
+        <a href="img/decom-1-1.png" target="_blank" rel="noopener"><img loading="lazy" src="img/decom-1-1.png" alt="감사 로그에서 에이전트 상호작용 확인"></a>
+      </figure>
+      <div class="note"><code>Purview &gt; 감사(Audit)</code>에서 폐기 대상 에이전트의 <b>프롬프트·응답·접근 리소스</b> 기록을 조회합니다. Microsoft 365 Copilot 및 Copilot Studio로 만든 에이전트의 상호작용은 <b>Audit(표준)</b>에 자동 포함되어 별도 설정 없이 기록됩니다. 삭제·복원·영구 삭제 이벤트도 감사 로그에 남으므로 폐기 이력 추적이 가능합니다. <span class="hl-note">감사 로그 검색에는 Purview <b>감사 로그(Audit Logs)</b> 또는 <b>조회 전용 감사 로그(View-Only Audit Logs)</b> 역할이 필요합니다(<code>Purview &gt; 설정 &gt; 역할 및 범위 &gt; 역할 그룹</code>에서 할당).</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/audit-search' target='_blank' rel='noopener'>감사 로그 검색·권한(공식 문서)</a>.</div>
+      <figure class="fig" id="decom-1-2">
+        <div class="fig-title"><span class="fig-num">1-2</span>eDiscovery 보류 또는 보존 정책으로 기록 확보</div>
+        <a href="img/decom-1-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/decom-1-2.png" alt="eDiscovery 보류 또는 보존 정책으로 기록 확보"></a>
+      </figure>
+      <div class="note">규정 준수상 장기 보존이 필요하면, 삭제 전에 <code>eDiscovery</code> 보류 또는 <code>데이터 수명 주기 관리</code> 보존 정책으로 대화·상호작용 기록을 고정합니다. Agent 365는 eDiscovery·데이터 수명 주기 관리·커뮤니케이션 규정 준수를 지원합니다. <span class="hl-note">eDiscovery 케이스·보류 생성에는 Purview <b>eDiscovery 관리자(eDiscovery Manager)</b> 역할 그룹이 필요합니다(<code>Purview &gt; 설정 &gt; 역할 및 범위 &gt; 역할 그룹</code>에서 할당). 또한 에이전트 영구 삭제 후 transcript의 보존 기간·위치는 공식 문서에 명시되지 않았으므로, 필요한 기록은 <b>삭제 전에</b> 보존 조치로 확보하는 것이 안전합니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions' target='_blank' rel='noopener'>eDiscovery 권한 할당(공식 문서)</a>.</div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch10-2">2단계 · 에이전트 삭제 (Copilot Studio)</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">기록을 확보했으면 에이전트를 삭제합니다. <b>이 가이드의 Copilot Studio 에이전트</b>는 관리 센터에 <b>삭제(Delete)</b>가 없고 <b>제거(Uninstall)·차단</b>만 제공되므로, 완전 삭제는 <b>Copilot Studio 메이커 포털</b>에서 수행합니다. 메이커 포털의 삭제는 <b>소프트 삭제가 아니라 곧바로 영구 삭제</b>입니다 — 30일 복구 창이나 관리 센터 ‘삭제된 에이전트’ 탭이 적용되지 않습니다. 단, 삭제로 함께 제거되는 <b>Entra Agent ID(서비스 주체)</b>는 Entra 디렉터리 휴지통에 <b>30일간 보존</b>되어 그 기간 내 복원할 수 있습니다(3단계에서 확인).</p>
+      <figure class="fig" id="decom-2-1">
+        <div class="fig-title"><span class="fig-num">2-1</span>메이커 포털에서 에이전트 삭제 (영구 삭제)</div>
+        <a href="img/decom-2-1.png" target="_blank" rel="noopener"><img loading="lazy" src="img/decom-2-1.png" alt="메이커 포털에서 에이전트 삭제 (영구 삭제)"></a>
+      </figure>
+      <div class="note"><code>Copilot Studio(copilotstudio.microsoft.com) &gt; 환경 선택 &gt; 에이전트</code>에서 폐기 대상 에이전트를 열고, 상단 <b>Settings 옆 ⋯ &gt; Delete</b>를 선택합니다. 확인을 위해 <b>에이전트 이름을 입력</b>하고 <b>Delete agent</b>를 누르면, 안내대로 <b>작업 영역·토픽 콘텐츠·기록 분석을 포함한 모든 에이전트 데이터가 영구적으로 삭제</b>되며 <b>복구할 수 없습니다</b>(소프트 삭제 아님). <span class="hl-note">관리 센터의 <b>제거(Remove)</b>는 설치 제거(Uninstall)여서 에이전트가 삭제되지 않습니다. 완전 폐기는 반드시 메이커 포털에서 합니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-first-bot' target='_blank' rel='noopener'>Copilot Studio 에이전트 삭제(공식 문서)</a>.</div>
+      <figure class="fig" id="decom-2-2">
+        <div class="fig-title"><span class="fig-num">2-2</span>삭제 후 확인 — ‘삭제된 에이전트’ 탭에는 없음</div>
+        <a href="img/decom-2-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/decom-2-2.png" alt="삭제 후 확인 — ‘삭제된 에이전트’ 탭에는 없음"></a>
+      </figure>
+      <div class="note">메이커 포털 삭제는 즉시 영구 삭제이므로, 관리 센터 <code>에이전트 &gt; 삭제된 에이전트</code> 탭에서 해당 에이전트를 검색해도 <b>표시되지 않습니다</b>(이 탭은 <b>Foundry·Agent Builder</b>처럼 관리 센터에서 <b>삭제(Delete)</b>해 <b>소프트 삭제(30일)</b>된 에이전트만 보여 주며, 거기서 복원 또는 영구 삭제합니다). 따라서 Copilot Studio 에이전트는 이 탭이 아니라 <b>3단계의 Entra 디렉터리 휴지통</b>에서 30일 복구 여부를 확인합니다. <span class="hl-note">정리: 같은 ‘삭제’라도 Copilot Studio 봇 객체는 복구 창 없이 영구 삭제, 연결된 Entra Agent ID만 디렉터리 휴지통 30일 보존.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-365/admin/manage/agent-actions?view=o365-worldwide' target='_blank' rel='noopener'>에이전트 수명주기 작업(공식 문서)</a>.</div><h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch10-3">3단계 · Entra Agent ID·연결 리소스 정리</h2><p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">메이커 포털 삭제는 테넌트에 프로비저닝된 <b>Entra Agent ID(서비스 주체)·app registration</b>도 함께 제거합니다. 제거된 Agent ID는 <b>Entra 디렉터리 휴지통(삭제된 항목)에 30일간 보존</b>되어 그 기간 내 복원할 수 있고, 이후 영구 삭제됩니다. 다만 조건부 액세스 등으로 자동 제거가 실패하면 Agent ID가 활성 상태로 잔존할 수 있으므로, 폐기 마무리로 신원·권한·연결을 점검합니다.</p>
+      <figure class="fig" id="decom-3-1">
+        <div class="fig-title"><span class="fig-num">3-1</span>잔존 Entra Agent ID 확인 — 자동 정리 검증</div>
+        <a href="img/decom-3-1.png" target="_blank" rel="noopener"><img loading="lazy" src="img/decom-3-1.png" alt="잔존 Entra Agent ID 확인 — 자동 정리 검증"></a>
+      </figure>
+      <div class="note"><code>Entra 관리 센터 &gt; 엔터프라이즈 애플리케이션 / 앱 등록</code>에서 폐기한 에이전트의 <b>Agent ID(서비스 주체)</b>가 남아 있는지 확인합니다(에이전트의 Entra Agent ID GUID는 삭제 전 관리 센터 에이전트 세부 정보 또는 Copilot Studio 메타데이터에서 확보해 둡니다). <b>이 실습에서는 메이커 포털 삭제 직후 해당 Agent ID로 검색하니 ‘결과 없음’</b>으로, 서비스 주체·앱 등록이 <b>자동으로 제거</b>됐음을 확인했습니다 — 조건부 액세스 차단이 없어 신원까지 정상 정리된 경우입니다. 제거된 서비스 주체는 <b>Entra 디렉터리 휴지통(삭제된 항목)에 30일간 보존</b>되므로, 그 기간 내에는 필요 시 복원할 수 있습니다. <span class="hl-note">반대로 조건부 액세스가 신원 리소스 제거를 막아 삭제가 실패하면 Agent ID가 활성 상태로 잔존할 수 있으므로, 이때는 수동으로 제거합니다(프로그래매틱으로는 <code>DELETE /servicePrincipals/&lt;id&gt;</code>).</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-first-bot' target='_blank' rel='noopener'>Copilot Studio 삭제 시 신원 리소스 제거·CA 실패(공식 문서)</a> · <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-copilot-studio/govern-agents-identities-overview' target='_blank' rel='noopener'>에이전트 신원 거버넌스(공식 문서)</a>.</div>
+      <figure class="fig" id="decom-3-2">
+        <div class="fig-title"><span class="fig-num">3-2</span>연결 리소스·권한 정리</div>
+        <a href="img/decom-3-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/decom-3-2.png" alt="연결 리소스·권한 정리"></a>
+      </figure>
+      <div class="note">마지막으로, 에이전트에 연결됐던 <b>커넥터·MCP 도구·외부 서비스 액세스·서비스 계정 권한</b>과 <b>게시 채널(Teams/M365 Copilot)·조직 카탈로그 등록·거버넌스 정책</b>이 남아 있지 않은지 점검해 제거하거나 재할당합니다. 예를 들어 이 에이전트에 씌웠던 <b>액세스 패키지</b>(<code>Entra ID 거버넌스 &gt; 자격 관리 &gt; 액세스 패키지</code>)나 보안 특성·조건부 액세스 대상이 더 이상 필요 없다면 정리합니다. <b>하나의 객체를 차단·삭제해도 외부 서비스가 비활성화되거나 색인된 데이터가 제거되는 것은 아니므로</b>, 각 의존성을 개별 검토해야 합니다. 폐기 완료 후에는 <b>최종 상태·폐기일·소유자·아카이브 위치</b>를 기록해 둡니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/improve-plugin' target='_blank' rel='noopener'>에이전트 폐기(Retire) 절차(공식 문서)</a>.</div>
+    <div class="pagenav"><a class="prv" href="#ch8" data-go="ch8"><span class="lbl">← 이전</span><br>8. 에이전트 트래픽 모니터링</a><span class="pn-empty"></span></div>
   </section>
   <div class="footer">에이전트 보안을 위한 Agent 365 활용 가이드 · 스크린샷은 Copilot Studio(New experience) 실습 기준 · 각 장 상단 표가 전체 순서입니다.</div>
 </div></main>
