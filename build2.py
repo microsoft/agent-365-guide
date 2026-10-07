@@ -15,7 +15,7 @@ CH = [
       lead="Copilot Studio(New experience)에서 실습용 에이전트를 만들고, 지침·지식·도구를 구성한 뒤 Teams / Microsoft 365 Copilot 채널로 게시하고 관리자 승인까지 제출하는 단계입니다. 이후 1~8장의 모든 관리·보안 시나리오는 여기서 만든 에이전트를 대상으로 진행합니다."),
  dict(id="ch1", num="1", orig="1", name="에이전트 승인 및 전사 배포", intro=18, range=(19,25),
       lead="제작자가 제출한 에이전트를 AI 관리자가 검토·승인하고, 조직 카탈로그(Microsoft Store)에 게시해 전사에 배포하는 단계입니다. 승인 심사에서는 제작자·업무 목적·지식·도구·요청 권한을 함께 확인합니다."),
- dict(id="ch1b", num="1·심화", orig="1b", name="접근 정책", parent="ch1", subnum="심화", hidden=True,
+ dict(id="ch1b", num="1·심화", orig="1b", name="접근 정책", parent="ch1", subnum="심화",
       intro=None, range=None, custom=True,
       lead="1장의 승인·배포가 '에이전트를 조직에 올리는' 과정이라면, 이 심화 문서는 그 에이전트에 <b>접근 거버넌스 정책</b>을 씌우는 과정입니다. 승인·배포와 함께 ① <b>액세스 패키지</b>로 '누가 이 에이전트(와 에이전트가 쓰는 리소스)를 요청·사용할 수 있는가'를 통제하고, ② <b>사용자 지정 보안 특성</b>으로 에이전트를 분류·태깅해 조건부 액세스 등 정책의 적용 대상을 지정합니다."),
  dict(id="ch2", num="2", orig="2", name="에이전트 인벤토리 확인", intro=26, range=(27,30),
@@ -237,6 +237,29 @@ EXTRA_ROWS = {
     ],
 }
 
+# ch0 개요 표는 덱 원본이 3컬럼(설정/확인 병합)이라 4컬럼·0단계 형식으로 재작성 (1~8단계 번호는 덱 피규어와 매핑되므로 유지)
+CH0_TABLE = [
+    ["#", "항목", "설정 위치", "확인 포인트", ""],
+    ["0", "역할/권한 준비", "Power Platform 관리 센터 > 환경 > 역할",
+     "대상 환경에 환경 제작자(Maker) 이상 역할 확보 · 실습 환경 고정(7·8장과 동일 환경)", ""],
+    ["1", "환경 준비", "New Copilot Studio > 환경 선택기",
+     "실습에 사용할 Power Platform 환경을 고정", "step-ch0-1"],
+    ["2", "빈 에이전트 생성", "Agents > New agent > 이름·지침 입력 > Save",
+     "템플릿이 아닌 빈 에이전트로 생성 · 식별 가능한 이름 지정", "step-ch0-2"],
+    ["3", "지침·오케스트레이션", "Build > Instructions · Model / Settings > AI & behavior",
+     "새 UI의 모델·행동 설정 확인(기존 생성형 토글과 구분)", "step-ch0-3"],
+    ["4", "지식 추가", "Settings > Safety & access / Build > Add knowledge",
+     "SharePoint·OneDrive·Dataverse 등 필요한 지식 연결", "step-ch0-4"],
+    ["5", "도구 구성", "Build > Add tool > Model Context Protocol (MCP) 등",
+     "필요한 도구(MCP 등) 연결", "step-ch0-5"],
+    ["6", "테스트", "Preview(테스트) 패널",
+     "한국어 프롬프트로 지식 인용·도구 호출 확인", "step-ch0-6"],
+    ["7", "게시·채널 연결", "게시 > 채널 > Teams 및 Microsoft 365 Copilot",
+     "에이전트 게시 및 채널 추가", "step-ch0-7"],
+    ["8", "관리자 승인 제출", "채널 > 가용성 옵션 > 내 조직의 모든 사람에게 표시",
+     "관리자 승인 제출 > 예 > 새로 고침으로 요청 상태 확인", "step-ch0-8"],
+]
+
 CH5_TABLE = [
     ["#", "항목", "설정 위치", "확인 포인트", ""],
     ["0", "역할/권한 준비", "Entra 관리 센터 > 역할 및 관리자 > 조건부 액세스 관리자",
@@ -377,7 +400,7 @@ DECOM_TABLE = [
     ["#", "단계", "설정 위치", "확인 포인트", ""],
     ["0", "역할/권한 준비",
      "Entra 관리 센터 > 사용자 > 할당된 역할 > 할당 추가\nPower Platform 관리 센터 > 환경 > 역할\nPurview 포털 > 설정 > 역할 및 범위 > 역할 그룹",
-     "에이전트 ID 관리자 추가\n환경 시스템 관리자 지정\n감사 로그 · eDiscovery 관리자 역할 그룹 추가", ""],
+     "에이전트 ID 관리자 추가\n환경 시스템 관리자 지정\n감사 관리자 · eDiscovery 관리자 역할 그룹 추가", ""],
     ["1", "폐기 전 로그·기록 보존",
      "Purview > 감사(Audit) / eDiscovery / 데이터 수명 주기 관리",
      "영구 삭제 전에 상호작용·프롬프트·응답·transcript를 감사 로그·eDiscovery 보류로 확보(삭제는 되돌릴 수 없음)", "step-ch10-1"],
@@ -413,7 +436,7 @@ DECOM_FIGS = [
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">영구 삭제는 되돌릴 수 없고, 에이전트 삭제 시 관련 데이터가 함께 정리될 수 있습니다. '
      '따라서 폐기 결정 후 <b>가장 먼저</b> 해당 에이전트의 상호작용 기록을 확보합니다. Agent 365 에이전트는 생성 시 자동으로 감사가 활성화되어 프롬프트·응답이 통합 감사 로그에 기록됩니다.</p>'),
     ("decom-1-1", "1-1", "감사 로그에서 에이전트 상호작용 확인", "img/decom-1-1.png",
-     "<code>Purview &gt; 감사(Audit)</code>에서 폐기 대상 에이전트의 <b>프롬프트·응답·접근 리소스</b> 기록을 조회합니다. Microsoft 365 Copilot 및 Copilot Studio로 만든 에이전트의 상호작용은 <b>Audit(표준)</b>에 자동 포함되어 별도 설정 없이 기록됩니다. 삭제·복원·영구 삭제 이벤트도 감사 로그에 남으므로 폐기 이력 추적이 가능합니다. <span class=\"hl-note\">감사 로그 검색에는 Purview <b>감사 로그(Audit Logs)</b> 또는 <b>조회 전용 감사 로그(View-Only Audit Logs)</b> 역할이 필요합니다(<code>Purview &gt; 설정 &gt; 역할 및 범위 &gt; 역할 그룹</code>에서 할당).</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/audit-search' target='_blank' rel='noopener'>감사 로그 검색·권한(공식 문서)</a>."),
+     "<code>Purview &gt; 감사(Audit)</code>에서 폐기 대상 에이전트의 <b>프롬프트·응답·접근 리소스</b> 기록을 조회합니다. Microsoft 365 Copilot 및 Copilot Studio로 만든 에이전트의 상호작용은 <b>Audit(표준)</b>에 자동 포함되어 별도 설정 없이 기록됩니다. 삭제·복원·영구 삭제 이벤트도 감사 로그에 남으므로 폐기 이력 추적이 가능합니다. <span class=\"hl-note\">감사 로그 검색에는 Purview <b>감사 관리자(Audit Manager)</b>(감사 설정 관리까지) 또는 <b>감사 읽기 권한자(Audit Reader)</b>(조회·내보내기 전용) 역할 그룹이 필요합니다. 두 역할 그룹은 각각 <b>감사 로그(Audit Logs)</b> · <b>조회 전용 감사 로그(View-Only Audit Logs)</b> 역할을 포함하며, <code>Purview &gt; 설정 &gt; 역할 및 범위 &gt; 역할 그룹</code>에서 할당합니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/audit-get-started' target='_blank' rel='noopener'>감사 솔루션 시작·권한(공식 문서)</a>."),
     ("decom-1-2", "1-2", "eDiscovery 보류 또는 보존 정책으로 기록 확보", "img/decom-1-2.png",
      "규정 준수상 장기 보존이 필요하면, 삭제 전에 <code>eDiscovery</code> 보류 또는 <code>데이터 수명 주기 관리</code> 보존 정책으로 대화·상호작용 기록을 고정합니다. Agent 365는 eDiscovery·데이터 수명 주기 관리·커뮤니케이션 규정 준수를 지원합니다. <span class=\"hl-note\">eDiscovery 케이스·보류 생성에는 Purview <b>eDiscovery 관리자(eDiscovery Manager)</b> 역할 그룹이 필요합니다(<code>Purview &gt; 설정 &gt; 역할 및 범위 &gt; 역할 그룹</code>에서 할당). 또한 에이전트 영구 삭제 후 transcript의 보존 기간·위치는 공식 문서에 명시되지 않았으므로, 필요한 기록은 <b>삭제 전에</b> 보존 조치로 확보하는 것이 안전합니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions' target='_blank' rel='noopener'>eDiscovery 권한 할당(공식 문서)</a>."),
 
@@ -439,48 +462,56 @@ DECOM_FIGS = [
 # ===== Chapter 1b (접근 정책 — 액세스 패키지 · 보안 특성) 커스텀 =====
 ACCESS_TABLE = [
     ["#", "단계", "설정 위치", "확인 포인트", ""],
-    ["1", "접근 정책 설계",
-     "— (사전 설계)",
-     "에이전트별로 '누가 요청·사용 가능한가'(액세스 패키지)와 '어떻게 분류·태깅할 것인가'(보안 특성)를 정의. 두 기능 모두 에이전트 ID 대상은 미리 보기", "step-ch1b-1"],
-    ["2", "보안 특성 정의·할당",
+    ["0", "역할/권한 준비",
+     "Entra 관리 센터 > 역할 및 관리자 > 역할 할당",
+     "특성 정의 관리자·특성 할당 관리자(보안 특성)\nID 거버넌스 관리자(카탈로그·액세스 패키지)\n전역 관리자도 보안 특성 권한은 기본 미포함", ""],
+    ["1", "보안 특성 정의·할당",
      "Entra ID > 사용자 지정 보안 특성 / 엔터프라이즈 앱",
-     "특성 집합·특성 정의 후 에이전트(서비스 주체)에 값 할당 → 거버넌스·정책 필터의 분류 기준으로 사용", "step-ch1b-2"],
-    ["3", "액세스 패키지 생성·할당",
-     "Entra ID 거버넌스 > 자격 관리 > 액세스 패키지",
-     "카탈로그에 리소스(그룹·OAuth API 권한·Entra 역할) 추가 → '모든 에이전트' 범위 정책으로 요청·승인·만료 설정", "step-ch1b-3"],
+     "특성 집합·특성 정의 후 에이전트(서비스 주체)에 값 할당 → 거버넌스·정책 필터의 분류 기준", "step-ch1b-1"],
+    ["2", "액세스 패키지 생성·할당",
+     "Entra ID 거버넌스 > 자격 관리 > 카탈로그 / 액세스 패키지",
+     "카탈로그에 리소스(그룹·OAuth 권한·Entra 역할) 추가 → 액세스 패키지로 묶어 '모든 에이전트' 범위·승인·만료 설정", "step-ch1b-2"],
 ]
 ACCESS_FIGS = [
-    ("callout", '<h2 class="ov-h step-h" id="step-ch1b-1">1단계 · 접근 정책 설계</h2>'
-     '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">승인된 에이전트에 씌울 접근 거버넌스를 두 축으로 설계합니다. '
-     '<b>액세스 패키지</b>는 "<b>누가</b> 이 에이전트와 에이전트가 쓰는 리소스를 요청·사용할 수 있는가"를, '
-     '<b>보안 특성</b>은 "이 에이전트를 <b>어떻게 분류·태깅</b>해 정책 대상으로 삼을 것인가"를 담당합니다. '
-     '보안 특성으로 분류한 에이전트를 거버넌스 정책의 대상으로 지정하므로, <b>보안 특성 → 액세스 패키지</b> 순서로 구성하는 것이 자연스럽습니다.</p>'
-     '<div class="ref-card"><p style="margin:0 0 6px;font-size:14px;"><b>라이선스·역할 요건</b></p>'
-     '<div class="tw tw-fields"><table><tbody>'
-     '<tr><td>라이선스</td><td>에이전트 ID 거버넌스(미리 보기)는 <b>Microsoft 365 E7</b>(Agent 365 + Entra Suite 포함) 또는 <b>Agent 365 + 최소 Entra P1/M365 E3</b></td></tr>'
-     '<tr><td>보안 특성 정의</td><td><b>특성 정의 관리자</b>(Attribute Definition Administrator)</td></tr>'
-     '<tr><td>보안 특성 할당</td><td><b>특성 할당 관리자</b>(Attribute Assignment Administrator) — 전역 관리자도 기본적으로 보안 특성 권한 없음</td></tr>'
-     '<tr><td>액세스 패키지</td><td><b>ID 거버넌스 관리자</b>(Identity Governance Administrator)</td></tr>'
-     '</tbody></table></div>'
-     '<div class="ref-links"><b>근거:</b> '
-     '<a class="xref-ext" href="https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview" target="_blank" rel="noopener">에이전트 ID 거버넌스 개요</a> · '
-     '<a class="xref-ext" href="https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add" target="_blank" rel="noopener">보안 특성 정의·역할</a></div></div>'),
-
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch1b-2">2단계 · 보안 특성 정의·할당</h2>'
+    ("callout", '<h2 class="ov-h step-h" id="step-ch1b-1">1단계 · 보안 특성 정의·할당</h2>'
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">에이전트를 분류할 <b>사용자 지정 보안 특성</b>을 정의하고, 대상 에이전트(서비스 주체)에 값을 할당합니다. '
-     '보안 특성은 사용자·엔터프라이즈 애플리케이션(서비스 주체)에 붙일 수 있고, <b>에이전트 ID는 서비스 주체로 표현</b>되므로 할당 대상이 됩니다.</p>'),
-    ("acc-2-1", "2-1", "보안 특성 집합·특성 정의", "img/acc-2-1.png",
-     "<code>Entra ID &gt; 사용자 지정 보안 특성</code>에서 ① <b>특성 집합 추가</b>로 집합(예: <code>AgentGovernance</code>)을 만들고, ② 집합 안에 특성(예: <code>Classification</code> = <code>Public</code>/<code>Internal</code>/<code>Confidential</code>/<code>Restricted</code>)을 정의합니다. 데이터 형식(문자열·정수·부울), 단일/다중 값, 자유 입력/사전 정의 값을 지정합니다. <span class=\"hl-note\">특성 집합은 생성 후 이름 변경·삭제가 불가하므로 명명 규칙을 먼저 정합니다. 또한 특성 정의·할당에는 전역 관리자와 별개로 <b>특성 정의 관리자</b>·<b>특성 할당 관리자</b> 역할이 필요합니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add' target='_blank' rel='noopener'>보안 특성 추가(공식 문서)</a>."),
-    ("acc-2-2", "2-2", "에이전트에 보안 특성 할당 — 배포 서식 파일에서 적용", "img/acc-deploy.png",
-     "에이전트를 배포(게시)할 때 <code>Microsoft 365 관리 센터 &gt; 에이전트 &gt; 요청</code>의 게시 마법사 <b>‘서식 파일 적용’</b> 단계에서 <b>사용자 지정 보안 특성</b>을 선택하고 특성·값(예: <code>Classification = Confidential</code>)을 지정하면, 배포와 동시에 에이전트의 Entra 에이전트 ID에 특성이 할당됩니다. 같은 화면에서 <b>액세스 패키지</b>(예: <code>Agent Resource Access</code>)와 <b>조건부 액세스</b>를 함께 적용해 ‘배포 과정에 거버넌스를 일괄 적용’할 수 있습니다. <span class=\"hl-note\">특성은 Entra 에이전트 ID로 인증하는 에이전트에 적용됩니다. 대안으로 <code>Entra ID &gt; 엔터프라이즈 애플리케이션 &gt; (서비스 주체) &gt; 사용자 지정 보안 특성 &gt; 할당 추가</code>에서 직접 할당할 수도 있습니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/custom-security-attributes-apps' target='_blank' rel='noopener'>앱에 보안 특성 할당(공식 문서)</a>."),
+     '보안 특성은 그 자체로 차단하지 않고, 조건부 액세스 등 <b>정책의 적용 대상(필터)</b>으로 쓰입니다.</p>'),
+    ("acc-sa-1", "1-1", "사용자 지정 보안 특성 메뉴 진입", "img/acc-sa-1-menu.png",
+     "<code>Entra ID &gt; 사용자 지정 보안 특성</code>으로 이동합니다. 기존 특성 집합 목록이 보이며, 상단 <b>특성 집합 추가</b>로 새 집합을 만듭니다."),
+    ("acc-sa-2", "1-2", "특성 집합 추가", "img/acc-sa-2-set.png",
+     "<b>특성 집합 추가</b>에서 집합 이름(예: <code>AgentGovernance</code>)과 설명을 입력합니다. 특성 집합은 보안 특성들을 담는 그릇이며, <b>생성 후 이름 변경·삭제가 불가</b>하므로 명명 규칙을 먼저 정합니다."),
+    ("acc-sa-3", "1-3", "집합 내 특성 목록 · 특성 추가", "img/acc-sa-3-attrlist.png",
+     "만든 특성 집합을 열면 그 안의 특성 목록이 보입니다. <b>특성 추가</b>로 분류 기준이 될 특성을 정의합니다."),
+    ("acc-sa-4", "1-4", "특성 정의 · 미리 정의된 값", "img/acc-sa-4-value.png",
+     "특성 이름(예: <code>Classification</code>), 데이터 형식(String)을 지정하고, <b>미리 정의된 값만 할당=예</b>로 설정한 뒤 <b>값 추가</b>로 <code>Public</code>/<code>Internal</code>/<code>Confidential</code>/<code>Restricted</code> 값을 등록합니다."),
+    ("acc-sa-5", "1-5", "에이전트(서비스 주체)에 특성 값 할당", "img/acc-assign-dialog.png",
+     "<code>엔터프라이즈 앱 &gt; (에이전트 서비스 주체) &gt; 사용자 지정 보안 특성 &gt; 할당 추가</code>에서 특성 집합·특성·값(예: <code>Classification = Confidential</code>)을 선택해 에이전트를 분류·태깅합니다. 에이전트 배포(게시) 시 <b>서식 파일 적용</b> 단계에서도 동일하게 지정할 수 있습니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/custom-security-attributes-apps' target='_blank' rel='noopener'>앱에 보안 특성 할당(공식 문서)</a>."),
 
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch1b-3">3단계 · 액세스 패키지 생성·할당</h2>'
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch1b-2">2단계 · 액세스 패키지 생성·할당</h2>'
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">에이전트 ID가 필요로 하는 리소스 접근을 <b>액세스 패키지</b>로 묶어, 요청·승인·만료를 통해 '
-     '"<b>의도적이고 감사 가능하며 기한이 있는(intentional, auditable, time-bound)</b>" 접근으로 통제합니다.</p>'),
-    ("acc-3-1", "3-1", "카탈로그·리소스 구성", "img/acc-3-1.png",
-     "<code>Entra ID 거버넌스 &gt; 자격 관리 &gt; 카탈로그</code>에서 카탈로그를 만들고, 에이전트에 할당 가능한 <b>3종 리소스</b>만 추가합니다 — ① <b>보안 그룹 멤버십</b>, ② <b>애플리케이션 OAuth API 권한</b>(Microsoft Graph 애플리케이션 권한 포함), ③ <b>Entra 디렉터리 역할</b>(허용 목록 내). <span class=\"hl-note\">에이전트 ID·서비스 주체는 <b>애플리케이션 역할·SAP 역할·SharePoint 사이트 역할에는 할당할 수 없으므로</b>, 그런 리소스가 포함된 기존 패키지는 재사용하지 말고 <b>새 액세스 패키지</b>를 만듭니다. OAuth 권한·디렉터리 역할을 넣으면 카탈로그가 '권한 상승(privileged)'으로 표시됩니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/agent-id/agent-access-packages' target='_blank' rel='noopener'>에이전트 액세스 패키지(공식 문서)</a>."),
-    ("acc-3-2", "3-2", "액세스 패키지 정책 — '모든 에이전트' 범위·승인·만료", "img/acc-3-2.png",
-     "액세스 패키지를 만들고 정책의 <b>“누가 접근을 받을 수 있는가(Who can get access)”</b>에서 <b>디렉터리의 사용자·서비스 주체·에이전트 ID 대상</b>을 고른 뒤 <b>모든 에이전트(All agents)</b>를 선택합니다. 승인 단계·할당 <b>만료일</b>을 설정하면, 만료가 임박할 때 <b>스폰서</b>에게 알림이 가고 스폰서가 연장 또는 만료를 결정합니다(스폰서가 퇴사하면 책임이 관리자에게 자동 이관). 에이전트가 Entra Agent ID를 쓰지 않으면 <b>모든 서비스 주체</b> 옵션으로 별도 정책을 만듭니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview' target='_blank' rel='noopener'>에이전트 ID 거버넌스 개요(공식 문서)</a>."),
+     '"<b>의도적이고 감사 가능하며 기한이 있는(intentional, auditable, time-bound)</b>" 접근으로 통제합니다. '
+     '액세스 패키지는 먼저 <b>카탈로그</b>(리소스를 담는 그릇)에 리소스를 등록한 뒤 그 리소스를 묶어 만들므로, '
+     '<b>카탈로그 생성 → 리소스 추가 → 액세스 패키지 생성</b> 순서로 진행합니다.</p>'),
+    ("acc-cat-1", "2-1", "자격 관리 > 카탈로그 진입", "img/acc-cat-1-list.png",
+     "<code>Entra ID 거버넌스 &gt; 자격 관리 &gt; 카탈로그</code>로 이동합니다. 상단 <b>New catalog</b>로 새 카탈로그를 만듭니다."),
+    ("acc-cat-2", "2-2", "카탈로그 생성", "img/acc-cat-2-new.png",
+     "카탈로그 이름·설명을 입력합니다. 카탈로그는 액세스 패키지에 넣을 <b>리소스들을 담는 컨테이너</b>입니다."),
+    ("acc-cat-3", "2-3", "카탈로그 리소스 목록", "img/acc-cat-3-resources.png",
+     "만든 카탈로그의 <b>Resources</b>에서 등록된 리소스를 확인하고 <b>Add resources</b>로 추가합니다. 에이전트에는 <b>보안 그룹·OAuth API 권한·Entra 디렉터리 역할</b>만 할당할 수 있습니다."),
+    ("acc-cat-4", "2-4", "리소스 추가 — 유형 선택", "img/acc-cat-4-addres.png",
+     "리소스 유형(그룹·애플리케이션·SharePoint·Azure·<b>Microsoft Entra 역할</b>)을 골라 카탈로그에 추가합니다. <span class=\"hl-note\">에이전트 ID·서비스 주체는 애플리케이션 역할·SAP 역할·SharePoint 사이트 역할에는 할당할 수 없습니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/agent-id/agent-access-packages' target='_blank' rel='noopener'>에이전트 액세스 패키지(공식 문서)</a>."),
+    ("acc-pkg-1", "2-5", "액세스 패키지 목록 · 새로 만들기", "img/acc-pkg-1-list.png",
+     "<code>자격 관리 &gt; 액세스 패키지</code>에서 <b>New access package</b>로 생성 마법사를 시작합니다."),
+    ("acc-pkg-2", "2-6", "① 기본 사항 — 이름·카탈로그", "img/acc-pkg-2-basics.png",
+     "패키지 이름·설명을 입력하고, 앞서 만든 <b>카탈로그</b>(Agent Access Catalog)를 선택합니다. 상단 탭이 마법사 전체 흐름(기본→리소스 역할→요청→수명 주기→검토)입니다."),
+    ("acc-pkg-3", "2-7", "② 리소스 역할", "img/acc-pkg-3-roles.png",
+     "카탈로그에 등록한 리소스를 패키지에 추가하고, 각 리소스의 <b>역할</b>(그룹 멤버·API 권한 등)을 지정합니다."),
+    ("acc-pkg-4", "2-8", "③ 요청 — 범위 '모든 에이전트'", "img/acc-pkg-4-requests.png",
+     "“누가 접근을 받을 수 있는가”에서 <b>디렉터리의 사용자·서비스 주체·에이전트 ID</b>를 고르고, 범위를 <b>모든 에이전트(All agents)</b>로 지정합니다. 승인 필요 여부·요청자도 함께 설정합니다."),
+    ("acc-pkg-5", "2-9", "④ 수명 주기 — 만료", "img/acc-pkg-5-lifecycle.png",
+     "할당 <b>만료</b>(예: 365일)·연장·액세스 검토를 설정합니다. 만료가 임박하면 스폰서에게 알림이 가고, 스폰서가 연장 또는 만료를 결정합니다."),
+    ("acc-pkg-6", "2-10", "⑤ 검토 + 만들기", "img/acc-pkg-6-review.png",
+     "설정 요약을 검토하고 <b>Create</b>로 액세스 패키지를 생성합니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview' target='_blank' rel='noopener'>에이전트 ID 거버넌스 개요(공식 문서)</a>."),
 ]
 
 # ===== Chapter 5 (리스크 탐지) — DLP + CC 신규 섹션 (IRM 앞에 주입) =====
@@ -714,6 +745,7 @@ for c in CH:
   </section>""")
         continue
     tbl = [list(r) for r in table_of(c["intro"])]
+    tbl = [[cell.replace("관리차", "관리자") for cell in r] for r in tbl]  # 덱 원문 오타 교정
     # 상세 단계가 없는 개요 표의 유령 행 제거 (문서 맥락 기준)
     tbl = [r for r in tbl if not (c["id"] == "ch1" and r and r[0].strip() == "4")]
     if tbl and not tbl[0][-1].strip():
@@ -728,6 +760,8 @@ for c in CH:
     for r in tbl[1:]:
         if r[0].strip().isdigit():
             step_names[int(r[0].strip())] = r[1].replace("\n", " ").strip()
+    if c["id"] == "ch0":
+        step_names[1] = "환경 준비"  # 역할은 0단계로 분리
     ths = "".join(f"<th>{esc(x.replace(chr(10),' '))}</th>" for x in hdr)
     trs = []
     for r in tbl[1:]:
@@ -802,6 +836,14 @@ for c in CH:
             _trs.append(f'<tr class="jump" data-target="{tgt}" tabindex="0">{tds}</tr>' if tgt else f"<tr>{tds}</tr>")
         trs = _trs
         steps = [render_figs(CH5_NEW_FIGS)] + steps + [render_figs(CH5_DSPM_FIGS)]
+    if c["id"] == "ch0":
+        ths = "".join(f"<th>{esc(x)}</th>" for x in CH0_TABLE[0][:-1])
+        _trs = []
+        for r in CH0_TABLE[1:]:
+            cells, tgt = r[:-1], r[-1]
+            tds = "".join("<td>" + esc(x).replace("\n", "<br>") + "</td>" for x in cells)
+            _trs.append(f'<tr class="jump" data-target="{tgt}" tabindex="0">{tds}</tr>' if tgt else f"<tr>{tds}</tr>")
+        trs = _trs
     parts.append(f"""
   <section id="{c['id']}" class="page">
     <div class="hero">
@@ -905,6 +947,7 @@ th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);ve
 th{background:var(--surface-2);font-weight:600;font-size:13px;white-space:nowrap;}
 td:first-child,th:first-child{text-align:center;font-weight:700;width:42px;color:var(--accent);}
 .tw.ov-wide table th:nth-child(3),.tw.ov-wide table td:nth-child(3){min-width:300px;}
+.tw.tw-roles table td:nth-child(2),.tw.tw-roles table th:nth-child(2){white-space:nowrap;min-width:116px;}
 tr:last-child td{border-bottom:none;}
 tr.jump{cursor:pointer;transition:background .12s;}
 tr.jump td:last-child::after{content:"→ 이동";color:var(--accent);font-weight:700;float:right;opacity:0;transition:opacity .12s;padding-left:8px;font-size:12px;}
@@ -1029,7 +1072,7 @@ PORTALS = [
  ("Microsoft Purview 포털", "내부 위험 관리(IRM) · 감사 · 에이전트 리스크 경고", "https://purview.microsoft.com"),
 ]
 ROLES = [
- ("0", "에이전트 생성", "환경 제작자(Maker) 이상", "Power Platform 관리 센터 · 환경/보안 역할"),
+ ("0", "에이전트 생성", "환경 제작자(Maker) 이상", "Power Platform 관리 센터 > 환경 > 역할"),
  ("1", "승인 및 전사 배포", "AI 관리자", "Entra > 사용자 > 할당된 역할"),
  ("2", "인벤토리 확인", "AI 읽기 권한자", "Entra > 사용자 > 할당된 역할"),
  ("3", "에이전트 차단", "AI 관리자 · 에이전트 ID 관리자", "Entra > 사용자 > 할당된 역할"),
@@ -1038,7 +1081,7 @@ ROLES = [
  ("6", "리스크 기반 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
  ("7", "런타임 보호", "애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자", "Entra > 역할 / Power Platform 관리 센터"),
  ("8", "트래픽 모니터링", "전역 보안 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
- ("9", "에이전트 폐기", "환경 시스템 관리자(삭제) · 에이전트 ID 관리자(신원 정리) · 감사 로그/eDiscovery 관리자(기록 보존)", "Power Platform 환경 역할 / Entra > 사용자 > 할당된 역할 / Purview 역할 그룹"),
+ ("9", "에이전트 폐기", "환경 시스템 관리자(삭제) · 에이전트 ID 관리자(신원 정리) · 감사 관리자·eDiscovery 관리자(기록 보존)", "Power Platform 관리 센터 > 환경 > 역할 / Entra > 사용자 > 할당된 역할 / Purview 역할 그룹"),
 ]
 
 portal_rows = "".join(
@@ -1072,7 +1115,7 @@ overview = f"""
 
     <h2 class="ov-h">단계별 필요한 역할 한눈에</h2>
     <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 7·9장 일부는 Power Platform 역할 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
-    <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody>{role_rows}</tbody></table></div>
+    <div class="tw tw-roles"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody>{role_rows}</tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
 
     <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
