@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 import json, os, html, re
+from deck_snapshot import TITLES, TABLES  # 덱 의존성 제거: deck.json 대신 구워둔 스냅샷 사용
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-deck = json.load(open(os.path.join(BASE, "deck.json"), encoding="utf-8"))
 
 def table_of(slide_no):
-    for sh in deck[slide_no-1]["shapes"]:
-        if sh["kind"] == "table":
-            return sh["table"]
-    return None
+    return TABLES.get(slide_no)
 
 CH = [
  dict(id="ch0", num="0", orig="0", name="에이전트 생성", intro=3, range=(4,17),
@@ -49,19 +46,19 @@ DESC = {
  7:"<code>Build &gt; Add knowledge</code>에서 SharePoint·OneDrive·Dataverse 등 지식 원본을 연결합니다. 여기서 붙인 지식은 1장의 관리자 승인 화면과 2장의 인벤토리 <b>데이터 &amp; 도구</b> 탭에 그대로 노출되므로, 민감한 사이트를 연결할 때는 사전 검토가 필요합니다.",
  8:"<code>Build &gt; Add tool &gt; Model Context Protocol (MCP)</code> 카탈로그에서 필요한 도구를 연결합니다. MCP 도구는 런타임에 실제로 호출되는 지점이므로, 5장(리스크 탐지)·7장(런타임 보호)·8장(트래픽 모니터링)에서 <b>탐지·보호·로깅의 실제 대상</b>이 됩니다.",
  9:"Preview(테스트) 패널에서 한국어 프롬프트로 실행해 지식 인용과 도구 호출이 정상인지 확인합니다. 단, 테스트 패널에서 발생한 활동은 2장에서 보는 <b>활성 사용자·세션 통계에는 집계되지 않습니다</b>. 실제 사용량 확인은 게시된 채널에서 실행한 결과로 판단해야 합니다.",
- 10:"구성이 끝나면 게시 다이얼로그에서 채널 추가를 시작합니다. 게시는 '에이전트를 저장하는 것'이 아니라 <b>사용자에게 노출될 경로를 여는 것</b>이라는 점을 구분합니다.",
- 11:"채널 선택기에서 <b>Teams 및 Microsoft 365 Copilot</b>을 선택합니다. 이 채널이 연결되어 있어야 이후 1장의 조직 카탈로그 배포, 3장의 차단 결과를 사용자 화면에서 확인할 수 있습니다.",
- 12:"① 사용할 채널을 확인하고 ② 표시(가용성) 범위를 선택합니다. 이 단계에서 선택한 범위가 관리자 승인 요청 여부를 결정합니다.",
- 13:"Teams + Microsoft 365 채널 게시가 완료된 상태입니다. <b>게시 완료가 곧 조직 카탈로그 승인·전사 배포 완료를 뜻하지는 않습니다</b>. 조직 전체 노출은 다음 단계의 관리자 승인을 거쳐야 합니다.",
- 14:"① 채널의 가용성 옵션을 열고 ② <b>내 조직의 모든 사람에게 표시</b>를 선택합니다. 이 선택이 AI 관리자에게 전달되는 승인 요청을 생성합니다.",
- 15:"제출 전 검토 화면에서 제작자, 설명, 연결된 지식·도구, 요청 권한 요약을 확인합니다. 여기 표시되는 내용이 관리자 검토 화면에 그대로 전달되므로, 설명이 비어 있으면 승인이 지연될 수 있습니다.",
- 16:"조직 공개 여부를 묻는 확인 대화상자에서 <b>예</b>를 선택하면 승인 요청이 제출됩니다.",
- 17:"제출 후에는 <b>승인 대기</b> 상태로 표시됩니다. 새로 고침으로 요청 상태를 확인하며, 이 시점부터는 제작자가 아니라 AI 관리자의 작업(1장)으로 넘어갑니다.",
+ 10:"에이전트를 사용자에게 노출하려면 먼저 채널을 연결합니다. 오른쪽 <b>채널</b> 패널에서 ① <b>채널</b>의 <b>+</b>를 눌러 <b>채널 추가</b> 대화 상자를 열고, ② <b>Teams + Microsoft 365</b>를 선택합니다. 게시는 '에이전트를 저장하는 것'이 아니라 <b>사용자에게 노출될 경로를 여는 것</b>이라는 점을 구분합니다.",
+ 11:"<b>사용 가능 위치</b>에서 ① <b>Microsoft 365 Copilot 및 Microsoft Teams</b>를 선택하고 ② <b>채널 추가</b>를 누릅니다. 이 채널이 연결되어 있어야 이후 1장의 조직 카탈로그 배포, 3장의 차단 결과를 사용자 화면에서 확인할 수 있습니다. <span class=\"hl-note\">게시 후에는 이 가용성 설정을 변경할 수 없습니다.</span>",
+ 12:"채널을 연결했으면 ① 우측 상단 <b>게시</b>를 눌러 게시 대화 상자를 열고 ② <b>에이전트 게시</b>를 선택해 에이전트를 게시합니다. 게시해야 선택한 채널에서 에이전트를 실제로 사용할 수 있습니다.",
+ 13:"게시가 완료되면 <b>에이전트가 성공적으로 게시되었습니다</b> 메시지와 함께 연결된 채널(<b>Teams + Microsoft 365</b>)이 표시됩니다. <b>게시 완료가 곧 조직 카탈로그 승인·전사 배포 완료를 뜻하지는 않습니다</b> — 조직 전체 노출은 다음 단계(조직 카탈로그 제출·관리자 승인)를 거쳐야 합니다. <span class=\"hl-note\">다만 이 <b>게시가 먼저 완료되어야</b> 다음 8단계의 <b>조직 카탈로그에 제출</b>이 가능합니다. 게시되지 않은(초안) 에이전트는 조직 카탈로그에 제출할 수 없으므로, 반드시 게시 → 조직 카탈로그 제출 순서로 진행합니다.</span>",
+ 14:"게시된 에이전트를 전사에 배포하려면 ① 우측 <b>채널</b> 패널의 <b>Teams + Microsoft 365</b>를 열고, 대화 상자에서 ② <b>사용 및 공유</b> 탭으로 이동한 뒤 ③ <b>조직 카탈로그에 제출</b>을 선택합니다. 이 제출이 AI 관리자에게 전달되는 승인 요청을 생성합니다.",
+ 15:"<b>조직 카탈로그에 제출</b>을 누르면 제출 상태 화면이 열립니다. 현재 <b>제출되지 않음</b> 상태이며, 제출 전 유의사항(회사 표준·규칙·정책 준수, 제출 후 재제출 제한)과 Teams 인증·SSO 구성용 <b>앱 ID</b>를 확인한 뒤 하단 <b>조직 카탈로그에 제출</b>을 누릅니다.",
+ 16:"조직 전체 공개 여부를 묻는 확인 창에서 <b>예, 제출합니다</b>를 선택합니다. 제출하면 <b>관리자가 Teams 관리 센터에서 승인한 후</b> 이 에이전트를 조직의 모든 사용자가 사용할 수 있게 됩니다.",
+ 17:"제출 후에는 <b>승인 대기</b> 상태로 표시됩니다. <b>새로 고침</b>으로 요청 상태를 확인하며, 이 시점부터는 제작자가 아니라 AI 관리자의 작업(1장)으로 넘어갑니다. 이 제출 건이 1장의 <code>모든 에이전트 &gt; 요청</code> 목록에 <b>보류 중 검토</b> 상태로 나타납니다.",
 
- 19:"AI 관리자 계정으로 <code>Microsoft 365 관리 센터 &gt; 에이전트 &gt; 모든 에이전트 &gt; 요청</code>으로 이동해 ① 요청 목록에서 ② 대상 요청을 엽니다. 이 메뉴가 보이지 않으면 Entra에서 <b>AI 관리자</b> 역할이 할당되었는지 먼저 확인합니다.",
- 20:"요청 상세에서 ① <b>Microsoft Store에 게시</b> 버튼을 선택해 게시 마법사를 시작합니다. 이 화면에서 제작자·업무 목적·지식·도구·요청 권한을 검토하고, 부적절하면 제출을 거부할 수 있습니다.<br><br><b>보안·AX 담당자 전사 게시 전 체크리스트</b> (상세 화면의 각 탭에서 확인)<br>• <b>세부 정보</b> — 제작자·소유자·업무 목적·게시 채널을 확인하고, <b>제작자·소유자가 식별·검증 가능한가</b><br>• <b>데이터 &amp; 도구</b> — 연결된 지식 원본과 MCP 도구 목록을 확인하고, <b>목적·지침 대비 적정한 MCP 도구만 연결되어 있는가</b>(불필요한 광범위 도구 없음), <b>지식 원본이 민감 사이트·과도한 범위를 포함하지 않는가</b><br>• <b>사용 권한</b> — 에이전트가 요청하는 API/커넥터 권한이 <b>업무 목적에 비해 과도하지 않은가</b>(최소 권한)<br>부적절한 경우 승인을 보류하고 제작자에게 수정 요청 후 재제출받습니다.",
+ 19:"AI 관리자 계정으로 <code>Microsoft 365 관리 센터 &gt; 에이전트 &gt; 모든 에이전트 &gt; 요청</code>으로 이동해 ① 요청 목록에서 ② 대상 요청을 엽니다. 이 메뉴가 보이지 않으면 Entra에서 <b>AI 관리자</b> 역할이 할당되었는지 먼저 확인합니다.<br><br><b>0장과의 연결 —</b> 이 <b>요청 목록</b>에는 앞선 <b>0장 8단계</b>에서 제작자가 <b>조직 카탈로그에 제출</b>한 에이전트가 <b>보류 중 검토(승인 대기)</b> 상태로 올라옵니다. 즉 여기 보이는 <code>Agent365-Guide-Demo</code>는 0장에서 만들어 제출한 바로 그 에이전트이며, 제작자의 제출(0장)과 관리자의 승인·배포(1장)가 이 화면에서 이어집니다.",
+ 20:"요청 상세에서 ① <b>Microsoft Store에 게시</b> 버튼을 선택해 게시 마법사를 시작합니다. 이 화면에서 제작자·업무 목적·지식·도구·요청 권한을 검토하고, 부적절하면 제출을 거부할 수 있습니다.",
  21:"① 설치 가능 대상과 ② 사전 설치 대상을 지정한 뒤 ③ 다음으로 진행합니다. <b>설치 가능</b>은 사용자가 원할 때 직접 추가하는 방식이고, <b>사전 설치</b>는 대상 사용자에게 자동으로 배포되는 방식이므로 영향 범위가 다릅니다.",
- 22:"배포 시 적용될 앱 정책 템플릿을 확인합니다. 조직에 이미 적용 중인 앱 설정 정책이 있는 경우 여기서 함께 확인됩니다.",
+ 22:"배포 시 적용될 앱 정책 템플릿을 확인합니다. 조직에 이미 적용 중인 앱 설정 정책이 있는 경우 여기서 함께 확인됩니다.<br><br><b>참조 —</b> 이 화면의 <b>Custom</b> 섹션에 보이는 <b>조건부 액세스 · 액세스 패키지 · 사용자 지정 보안 특성</b>의 세부 설정이 필요한 경우(예: 에이전트를 요청·승인·만료로 통제하거나 분류 태깅), <a class=\"xref\" data-target=\"ch1b\">1장 심화 · 접근 정책</a>을 참조하세요. 특히 <b>액세스 패키지</b>와 <b>사용자 지정 보안 특성</b>은 이 화면에서는 선택만 하고, 실제 정의·할당은 Entra에서 구성합니다.",
  23:"권한 검토 화면입니다. 이 사례에서는 <b>필요한 권한 없음</b>으로 표시됐지만, 이는 에이전트의 모든 MCP 도구가 무권한으로 실행된다는 뜻이 <b>아닙니다</b>. 도구별 인증·동의는 별도로 적용되며, 실제 데이터 접근은 도구 수준에서 다시 통제됩니다.<br><br><b>Note —</b> <b>Copilot Studio 에이전트</b>는 <b>생성 시점에 API 권한(위임/애플리케이션 권한)을 직접 부여하지 않으며</b>, 실제 권한은 각 도구·커넥터를 사용할 때 <b>런타임에 사용자 동의·연결 단위로 부여</b>됩니다. 따라서 이 화면에 요청 권한이 비어 있는 것은 정상입니다. 반면 <b>Copilot Studio 이외의 플랫폼·방법으로 생성된 에이전트</b>는 요청 권한이 함께 넘어올 수 있으므로, 그런 경우 이 <b>권한 검토 화면에서 요청 권한의 적정성을 확인</b>하면 됩니다.",
  24:"최종 검토 화면에서 대상·권한·정책을 한 번 더 확인한 뒤 게시합니다.",
  25:"관리자 처리가 완료된 상태입니다. 배포 직후에는 Teams / Microsoft 365 Copilot 사용자 화면에 반영되기까지 시간이 걸릴 수 있으므로, 사용자 실행 확인은 잠시 후 다시 시도합니다.",
@@ -141,6 +138,14 @@ r'''.\Create-CopilotWebhookApp.ps1 `
 # Override the displayed figure title for specific slides (unify section name before dash).
 TITLE_OVERRIDE = {
  60: "에이전트 정책 생성 — 위험 점수 부스터",
+ 10: "에이전트 게시 — 채널 추가 (Teams + Microsoft 365)",
+ 11: "에이전트 게시 — 채널 가용성 선택",
+ 12: "에이전트 게시 — 게시 실행 (에이전트 게시)",
+ 13: "에이전트 게시 — 게시 완료",
+ 14: "관리자 승인 제출 — 사용 및 공유에서 조직 카탈로그 제출 진입",
+ 15: "관리자 승인 제출 — 제출 상태 확인",
+ 16: "관리자 승인 제출 — 전사 공개 확인 (예, 제출합니다)",
+ 17: "관리자 승인 제출 — 제출 완료·승인 대기",
 }
 
 # Extra example figures appended after a slide's note (raw HTML).
@@ -156,7 +161,8 @@ EXTRA = {
         <div class="fig-title"><span class="fig-num" style="background:var(--surface-2);color:var(--text-soft);">예시</span>데이터 &amp; 도구 탭 — 지식·도구 확인 화면</div>
         <a href="img/admin-tab-datatools.png" target="_blank" rel="noopener"><img loading="lazy" src="img/admin-tab-datatools.png" alt="관리자 승인 상세 - 데이터 및 도구 탭 예시"></a>
         <figcaption class="fig-cap">각 탭을 열면 이렇게 항목별 상세가 표시됩니다. 예: <b>데이터 &amp; 도구</b> 탭에서는 <b>기능</b>(읽을 수 있음·그래프 커넥터), <b>지식</b>(참조 자료), <b>도구</b>(연결된 MCP 서버 목록·설명)를 확인해 목적 대비 적정성을 검토합니다.</figcaption>
-      </figure>""",
+      </figure>
+      <div class="note"><b>보안·AX 담당자 전사 게시 전 체크리스트</b> <span style="color:var(--text-soft);font-size:13px;">(상세 화면의 각 탭에서 확인 — 항목을 클릭해 체크)</span><ul class="chk"><li><input type="checkbox"><span><span class="chk-k">세부 정보</span>제작자·소유자·업무 목적·게시 채널을 확인하고, <b>제작자·소유자가 식별·검증 가능한가</b></span></li><li><input type="checkbox"><span><span class="chk-k">데이터 &amp; 도구</span>연결된 지식 원본과 MCP 도구 목록을 확인하고, <b>목적·지침 대비 적정한 MCP 도구만 연결되어 있는가</b>(불필요한 광범위 도구 없음), <b>지식 원본이 민감 사이트·과도한 범위를 포함하지 않는가</b></span></li><li><input type="checkbox"><span><span class="chk-k">사용 권한</span>에이전트가 요청하는 API/커넥터 권한이 <b>업무 목적에 비해 과도하지 않은가</b>(최소 권한)</span></li></ul><span class="hl-note">부적절한 경우 승인을 보류하고 제작자에게 수정 요청 후 재제출받습니다.</span></div>""",
  64: """
       <figure class="fig" id="s64-2">
         <div class="fig-title"><span class="fig-num">4-15</span>에이전트 경고 확인 — 경고 상세 (지표·심각도·관련 엔터티)</div>
@@ -471,20 +477,21 @@ ACCESS_TABLE = [
     ["2", "액세스 패키지 생성·할당",
      "Entra ID 거버넌스 > 자격 관리 > 카탈로그 / 액세스 패키지",
      "카탈로그에 리소스(그룹·OAuth 권한·Entra 역할) 추가 → 액세스 패키지로 묶어 '모든 에이전트' 범위·승인·만료 설정", "step-ch1b-2"],
+    ["3", "배포 시 정책 적용",
+     "Microsoft 365 관리 센터 > 에이전트 게시 마법사 > Policy template",
+     "게시(배포) 마법사의 Custom에서 1·2단계에서 만든 보안 특성·액세스 패키지(+조건부 액세스)를 선택 → 에이전트에 실제 적용", "step-ch1b-3"],
 ]
 ACCESS_FIGS = [
     ("callout", '<h2 class="ov-h step-h" id="step-ch1b-1">1단계 · 보안 특성 정의·할당</h2>'
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">에이전트를 분류할 <b>사용자 지정 보안 특성</b>을 정의하고, 대상 에이전트(서비스 주체)에 값을 할당합니다. '
      '보안 특성은 그 자체로 차단하지 않고, 조건부 액세스 등 <b>정책의 적용 대상(필터)</b>으로 쓰입니다.</p>'),
-    ("acc-sa-1", "1-1", "사용자 지정 보안 특성 메뉴 진입", "img/acc-sa-1-menu.png",
-     "<code>Entra ID &gt; 사용자 지정 보안 특성</code>으로 이동합니다. 기존 특성 집합 목록이 보이며, 상단 <b>특성 집합 추가</b>로 새 집합을 만듭니다."),
-    ("acc-sa-2", "1-2", "특성 집합 추가", "img/acc-sa-2-set.png",
-     "<b>특성 집합 추가</b>에서 집합 이름(예: <code>AgentGovernance</code>)과 설명을 입력합니다. 특성 집합은 보안 특성들을 담는 그릇이며, <b>생성 후 이름 변경·삭제가 불가</b>하므로 명명 규칙을 먼저 정합니다."),
-    ("acc-sa-3", "1-3", "집합 내 특성 목록 · 특성 추가", "img/acc-sa-3-attrlist.png",
-     "만든 특성 집합을 열면 그 안의 특성 목록이 보입니다. <b>특성 추가</b>로 분류 기준이 될 특성을 정의합니다."),
-    ("acc-sa-4", "1-4", "특성 정의 · 미리 정의된 값", "img/acc-sa-4-value.png",
-     "특성 이름(예: <code>Classification</code>), 데이터 형식(String)을 지정하고, <b>미리 정의된 값만 할당=예</b>로 설정한 뒤 <b>값 추가</b>로 <code>Public</code>/<code>Internal</code>/<code>Confidential</code>/<code>Restricted</code> 값을 등록합니다."),
-    ("acc-sa-5", "1-5", "에이전트(서비스 주체)에 특성 값 할당", "img/acc-assign-dialog.png",
+    ("ap-sa1-set", "1-1", "특성 집합 추가", "img/ap-sa1-set.png",
+     "<code>Entra ID &gt; 사용자 지정 보안 특성</code>에서 ① <b>사용자 지정 보안 특성</b>으로 이동해 ② <b>특성 집합 추가</b>를 누르고, ③ 집합 이름(예: <code>AgentGovernance</code>)과 설명을 입력한 뒤 ④ <b>추가</b>합니다. 특성 집합은 보안 특성들을 담는 그릇이며, <b>생성 후 이름 변경·삭제가 불가</b>하므로 명명 규칙을 먼저 정합니다."),
+    ("ap-sa2-attr", "1-2", "특성 정의 · 미리 정의된 값", "img/ap-sa2-attr.png",
+     "만든 특성 집합에서 <b>새 특성</b>을 추가합니다. ① 특성 이름(예: <code>Classification</code>)·설명·데이터 형식(String)을 지정하고 <b>미리 정의된 값만 할당 가능=예</b>로 둔 뒤, ② <b>값 추가</b>로 ③ <code>Public</code>/<code>Internal</code>/<code>Confidential</code>/<code>Restricted</code> 같은 값을 등록하고 ④ <b>추가</b>합니다."),
+    ("ap-sa3-active", "1-3", "활성 특성 목록 확인", "img/ap-sa3-active.png",
+     "특성 집합(<code>AgentGovernance</code>)의 <b>활성 특성</b> 목록에서 방금 정의한 <code>Classification</code> 특성(데이터 형식·미리 정의된 값)이 등록됐는지 확인합니다. 추가 분류 기준이 필요하면 <b>특성 추가</b>로 특성을 더 만들 수 있습니다."),
+    ("acc-sa-5", "1-4", "에이전트(서비스 주체)에 특성 값 할당", "img/acc-assign-dialog.png",
      "<code>엔터프라이즈 앱 &gt; (에이전트 서비스 주체) &gt; 사용자 지정 보안 특성 &gt; 할당 추가</code>에서 특성 집합·특성·값(예: <code>Classification = Confidential</code>)을 선택해 에이전트를 분류·태깅합니다. 에이전트 배포(게시) 시 <b>서식 파일 적용</b> 단계에서도 동일하게 지정할 수 있습니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/custom-security-attributes-apps' target='_blank' rel='noopener'>앱에 보안 특성 할당(공식 문서)</a>."),
 
     ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch1b-2">2단계 · 액세스 패키지 생성·할당</h2>'
@@ -492,26 +499,36 @@ ACCESS_FIGS = [
      '"<b>의도적이고 감사 가능하며 기한이 있는(intentional, auditable, time-bound)</b>" 접근으로 통제합니다. '
      '액세스 패키지는 먼저 <b>카탈로그</b>(리소스를 담는 그릇)에 리소스를 등록한 뒤 그 리소스를 묶어 만들므로, '
      '<b>카탈로그 생성 → 리소스 추가 → 액세스 패키지 생성</b> 순서로 진행합니다.</p>'),
-    ("acc-cat-1", "2-1", "자격 관리 > 카탈로그 진입", "img/acc-cat-1-list.png",
-     "<code>Entra ID 거버넌스 &gt; 자격 관리 &gt; 카탈로그</code>로 이동합니다. 상단 <b>New catalog</b>로 새 카탈로그를 만듭니다."),
-    ("acc-cat-2", "2-2", "카탈로그 생성", "img/acc-cat-2-new.png",
-     "카탈로그 이름·설명을 입력합니다. 카탈로그는 액세스 패키지에 넣을 <b>리소스들을 담는 컨테이너</b>입니다."),
-    ("acc-cat-3", "2-3", "카탈로그 리소스 목록", "img/acc-cat-3-resources.png",
-     "만든 카탈로그의 <b>Resources</b>에서 등록된 리소스를 확인하고 <b>Add resources</b>로 추가합니다. 에이전트에는 <b>보안 그룹·OAuth API 권한·Entra 디렉터리 역할</b>만 할당할 수 있습니다."),
-    ("acc-cat-4", "2-4", "리소스 추가 — 유형 선택", "img/acc-cat-4-addres.png",
-     "리소스 유형(그룹·애플리케이션·SharePoint·Azure·<b>Microsoft Entra 역할</b>)을 골라 카탈로그에 추가합니다. <span class=\"hl-note\">에이전트 ID·서비스 주체는 애플리케이션 역할·SAP 역할·SharePoint 사이트 역할에는 할당할 수 없습니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/agent-id/agent-access-packages' target='_blank' rel='noopener'>에이전트 액세스 패키지(공식 문서)</a>."),
-    ("acc-pkg-1", "2-5", "액세스 패키지 목록 · 새로 만들기", "img/acc-pkg-1-list.png",
-     "<code>자격 관리 &gt; 액세스 패키지</code>에서 <b>New access package</b>로 생성 마법사를 시작합니다."),
-    ("acc-pkg-2", "2-6", "① 기본 사항 — 이름·카탈로그", "img/acc-pkg-2-basics.png",
-     "패키지 이름·설명을 입력하고, 앞서 만든 <b>카탈로그</b>(Agent Access Catalog)를 선택합니다. 상단 탭이 마법사 전체 흐름(기본→리소스 역할→요청→수명 주기→검토)입니다."),
-    ("acc-pkg-3", "2-7", "② 리소스 역할", "img/acc-pkg-3-roles.png",
-     "카탈로그에 등록한 리소스를 패키지에 추가하고, 각 리소스의 <b>역할</b>(그룹 멤버·API 권한 등)을 지정합니다."),
-    ("acc-pkg-4", "2-8", "③ 요청 — 범위 '모든 에이전트'", "img/acc-pkg-4-requests.png",
-     "“누가 접근을 받을 수 있는가”에서 <b>디렉터리의 사용자·서비스 주체·에이전트 ID</b>를 고르고, 범위를 <b>모든 에이전트(All agents)</b>로 지정합니다. 승인 필요 여부·요청자도 함께 설정합니다."),
-    ("acc-pkg-5", "2-9", "④ 수명 주기 — 만료", "img/acc-pkg-5-lifecycle.png",
-     "할당 <b>만료</b>(예: 365일)·연장·액세스 검토를 설정합니다. 만료가 임박하면 스폰서에게 알림이 가고, 스폰서가 연장 또는 만료를 결정합니다."),
-    ("acc-pkg-6", "2-10", "⑤ 검토 + 만들기", "img/acc-pkg-6-review.png",
-     "설정 요약을 검토하고 <b>Create</b>로 액세스 패키지를 생성합니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview' target='_blank' rel='noopener'>에이전트 ID 거버넌스 개요(공식 문서)</a>."),
+    ("ap-cat1-new", "2-1", "자격 관리 > 카탈로그 생성", "img/ap-cat1-new.png",
+     "① <code>ID Governance</code> → ② <b>카탈로그</b>로 이동해 ③ <b>New catalog</b>를 누르고, ④ 카탈로그 이름(예: <code>Agent Access Catalog</code>)·설명과 요청 허용 옵션을 지정한 뒤 ⑤ <b>Create</b>로 만듭니다. 카탈로그는 액세스 패키지에 넣을 <b>리소스들을 담는 컨테이너</b>입니다."),
+    ("ap-cat2-resources", "2-2", "카탈로그에 리소스 추가", "img/ap-cat2-resources.png",
+     "만든 카탈로그에서 ① <b>Resources</b>를 열고 ② <b>Add resources</b>로 리소스를 추가합니다. 에이전트에는 <b>보안 그룹·OAuth API 권한·Entra 디렉터리 역할</b>만 할당할 수 있습니다. <span class=\"hl-note\">에이전트 ID·서비스 주체는 애플리케이션 역할·SAP 역할·SharePoint 사이트 역할에는 할당할 수 없습니다.</span> 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/agent-id/agent-access-packages' target='_blank' rel='noopener'>에이전트 액세스 패키지(공식 문서)</a>."),
+    ("ap-pkg1-list", "2-3", "액세스 패키지 목록 · 새로 만들기", "img/ap-pkg1-list.png",
+     "① <code>ID Governance</code> → ② <b>액세스 패키지</b>로 이동해 ③ <b>New access package</b>로 생성 마법사를 시작합니다."),
+    ("ap-pkg2-basics", "2-4", "① 기본 사항 — 이름·카탈로그", "img/ap-pkg2-basics.png",
+     "① 패키지 이름·설명을 입력하고, 앞서 만든 <b>카탈로그</b>(<code>Agent Access Catalog</code>)를 선택한 뒤 ② <b>Next: Resource roles</b>로 진행합니다. 상단 탭이 마법사 전체 흐름(Basics→Resource roles→Requests→Lifecycle→Review + create)입니다."),
+    ("acc-pkg-3", "2-5", "② 리소스 역할", "img/acc-pkg-3-roles.png",
+     "카탈로그에 등록한 리소스를 패키지에 추가하고, 각 리소스의 <b>역할</b>(그룹 멤버·API 권한·Entra 역할 등)을 지정합니다. 추가 가능한 유형은 <b>Groups and Teams · Applications · SharePoint sites · Azure Resources · Microsoft Entra role · API Permissions</b>이며, 에이전트용으로는 <b>보안 그룹·API 권한·Entra 역할</b>만 사용합니다."),
+    ("ap-pkg3-requests", "2-6", "③ 요청 — 범위 '모든 에이전트'", "img/ap-pkg3-requests.png",
+     "“<b>Who can get access</b>”에서 <b>For users, service principals, and agent identities in your directory</b>를 고르고, <b>Select specific scope</b>를 <b>All agents</b>로 지정합니다. 아래 <b>Who can request access</b>에서 요청 주체(예: <b>Agent sponsor or owner</b>)도 함께 설정합니다."),
+    ("ap-pkg4-approval", "2-7", "③ 요청 — 승인·사유 설정", "img/ap-pkg4-approval.png",
+     "같은 Requests 탭에서 <b>Require approval=Yes</b>로 승인 단계를 켜고, <b>First Approver</b>를 <b>Sponsors as approvers</b>(필요 시 Fallback 지정)로 지정합니다. 결정 기한(일)·요청자/승인자 사유 필수 여부도 설정합니다. 이렇게 하면 접근이 <b>승인을 거쳐</b> 부여됩니다."),
+    ("ap-pkg5-lifecycle", "2-8", "④ 수명 주기 — 만료", "img/ap-pkg5-lifecycle.png",
+     "<b>Expiration</b>에서 할당 <b>만료</b>(예: <code>Number of days = 365</code>)를 지정하고, <b>Extensions</b>(연장 허용·연장 승인 필요)와 <b>Access Reviews</b>를 설정합니다. 만료가 임박하면 스폰서에게 알림이 가고, 스폰서가 연장 또는 만료를 결정합니다."),
+    ("ap-pkg6-review", "2-9", "⑤ 검토 + 만들기", "img/ap-pkg6-review.png",
+     "<b>Review + create</b>에서 설정 요약(이름·카탈로그·요청 범위 <code>All agents</code>·승인자·만료)을 확인하고 <b>Create</b>로 액세스 패키지를 생성합니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview' target='_blank' rel='noopener'>에이전트 ID 거버넌스 개요(공식 문서)</a>."),
+
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch1b-3">3단계 · 배포 시 정책 적용</h2>'
+     '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">1~2단계에서 만든 <b>사용자 지정 보안 특성</b>과 <b>액세스 패키지</b>는 정의만으로 끝나지 않고, '
+     '에이전트를 전사에 배포할 때 <b>실제로 그 에이전트에 적용</b>됩니다. '
+     '<b>Microsoft 365 관리 센터</b>의 에이전트 게시(배포) 마법사 <b>Policy template</b> 단계에서, 앞서 만든 정책을 선택해 이 에이전트에 연결합니다. '
+     '(이 화면은 <a class="xref" data-target="ch1">1장 · 전사 배포</a>의 게시 마법사와 동일한 단계입니다.)</p>'),
+    ("ap-apply-template", "3-1", "게시 마법사 — Policy template에서 정책 선택·적용", "img/ap-apply-template.png",
+     "에이전트 게시 마법사의 <b>Policy template</b> 단계입니다. <b>Microsoft 정책은 기본 적용</b>되고, 관리자는 <b>Custom</b> 영역에서 앞서 만든 정책을 골라 이 에이전트에 연결합니다. "
+     "<b>Microsoft Entra 보호</b>에서 ① <b>조건부 액세스</b>(에이전트용 CA 정책), ② <b>액세스 패키지</b>(여기서는 2단계에서 만든 <code>Agent Resource Access</code>), "
+     "③ <b>사용자 지정 보안 특성</b>(1단계에서 만든 <code>Classification</code> 특성과 값(예: <code>Public</code>))을 선택합니다. "
+     "<span class=\"hl-note\">즉 1·2단계에서 <b>만들어 둔 정책이 실제 배포 시점에 이 화면에서 에이전트에 적용</b>됩니다. 보안 특성은 여기서 값을 지정해 에이전트를 분류·태깅하고, 액세스 패키지는 에이전트가 요청·사용할 리소스 접근을 통제합니다. 선택 후 <b>다음</b>으로 진행하면 해당 정책이 연결된 상태로 배포됩니다.</span> "
+     "근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/entra/agent-id/agent-access-packages' target='_blank' rel='noopener'>에이전트 액세스 패키지(공식 문서)</a>."),
 ]
 
 # ===== Chapter 5 (리스크 탐지) — DLP + CC 신규 섹션 (IRM 앞에 주입) =====
@@ -651,10 +668,7 @@ def render_figs(figs):
 
 
 def title_of(n):
-    for sh in deck[n-1]["shapes"]:
-        if sh["kind"] == "text" and sh["name"] in ("제목 1",) or (sh["kind"]=="text" and "title" in sh["name"].lower()):
-            return sh["text"].replace("\n", " ").strip()
-    return f"슬라이드 {n}"
+    return TITLES.get(n, f"슬라이드 {n}")
 
 def esc(s): return html.escape(s)
 
@@ -975,6 +989,14 @@ figure.fig a + a img{margin-top:14px;}
 .note{background:#eef4fb;border-left:4px solid var(--accent);border-radius:10px;padding:13px 16px;margin:8px 0 26px;font-size:14.5px;color:var(--text);}
 html[data-theme="dark"] .note{background:#13243a;}
 .note b{color:var(--text);}
+.chk{list-style:none;margin:10px 0 2px;padding:0;}
+.chk li{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;margin:7px 0;background:var(--surface);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);line-height:1.6;}
+.chk li > input[type="checkbox"]{flex:0 0 auto;width:17px;height:17px;margin:3px 0 0;accent-color:var(--accent);cursor:pointer;}
+.chk li > span{flex:1;}
+.chk .chk-k{display:block;font-weight:700;color:var(--text);margin-bottom:1px;}
+.chk li:has(> input:checked){background:#eafaef;border-color:#9fd9ad;}
+html[data-theme="dark"] .chk li:has(> input:checked){background:#122a1a;border-color:#2e6b3d;}
+.chk li:has(> input:checked) .chk-k{text-decoration:line-through;color:var(--text-soft);}
 .xref{color:var(--accent);font-weight:600;text-decoration:none;border-bottom:1px dashed var(--accent);cursor:pointer;}
 .xref:hover{text-decoration:none;background:var(--accent-soft,rgba(15,108,189,.1));border-radius:4px;}
 html[data-theme="dark"] .xref{color:var(--accent);}
