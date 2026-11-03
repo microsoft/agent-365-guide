@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import json, os, html, re
 from deck_snapshot import TITLES, TABLES  # 덱 의존성 제거: deck.json 대신 구워둔 스냅샷 사용
 
@@ -22,7 +22,7 @@ CH = [
  dict(id="ch4", num="4", orig="4", name="에이전트에 대한 기본 접근제어", intro=38, range=(39,47), custom=True,
       lead="사용자가 <b>사외(신뢰할 수 없는 네트워크)</b>에서 <b>Copilot Studio 에이전트</b>를 사용하지 못하도록 Entra 조건부 액세스 정책을 만들고, 실제 차단과 로그인 로그의 평가 결과를 확인하는 단계입니다. 접근 제어 대상이 클라우드 리소스가 아니라 에이전트 자체가 됩니다."),
  dict(id="ch5", num="5", orig="5", name="에이전트 리스크 탐지", intro=48, range=(50,64),
-      lead="에이전트의 상호작용에서 발생하는 위험을 탐지·수집하는 단계입니다. <b>Purview DLP</b>(민감 정보 유형이 포함된 프롬프트·메시지 차단), <b>Communication Compliance</b>(부적절·비윤리적 상호작용 및 기밀 공유 탐지)로 개별 위반을 탐지·차단하고, <b>내부 위험 관리(IRM)</b>는 이 신호들을 포함한 활동을 상관분석해 <b>에이전트/사용자별 위험 점수</b>를 산정합니다. 실제로 High 심각도 DLP 경고 등은 IRM의 트리거·지표로 작동하므로, 하나의 에이전트 활동을 <b>DLP·CC 경고와 IRM 위험 점수로 연결해 확인</b>합니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다."),
+      lead="에이전트의 상호작용에서 발생하는 위험을 탐지·수집하는 단계입니다. <b>Purview DLP</b>(Teams 메시지의 민감 정보 유형 차단), <b>Communication Compliance</b>(부적절·비윤리적 상호작용 및 기밀 공유 탐지)로 개별 위반을 탐지·차단하고, <b>내부 위험 관리(IRM)</b>는 이 신호들을 포함한 활동을 상관분석해 <b>에이전트/사용자별 위험 점수</b>를 산정합니다. 실제로 High 심각도 DLP 경고 등은 IRM의 트리거·지표로 작동하므로, 하나의 에이전트 활동을 <b>DLP·CC 경고와 IRM 위험 점수로 연결해 확인</b>합니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다."),
  dict(id="ch6", num="6", orig="4", name="에이전트 리스크 기반 접근제어", intro=38, range=(39,47),
       lead="에이전트가 접근하는 클라우드 앱·커넥터 리소스를 대상으로 조건부 액세스 정책을 적용하고, 위치·네트워크 등 리스크 신호에 따라 허용/차단을 제어한 뒤 로그인 로그로 평가 결과를 검증하는 단계입니다. 앞의 기본 접근제어가 에이전트 자체를 대상으로 했다면, 여기서는 에이전트가 호출하는 리소스(클라우드 앱)를 대상으로 접근을 통제합니다."),
  dict(id="ch7", num="7", orig="6", name="에이전트 런타임 보호", intro=65, range=(66,80),
@@ -165,12 +165,12 @@ EXTRA = {
       <div class="note"><b>보안·AX 담당자 전사 게시 전 체크리스트</b> <span style="color:var(--text-soft);font-size:13px;">(상세 화면의 각 탭에서 확인 — 항목을 클릭해 체크)</span><ul class="chk"><li><input type="checkbox"><span><span class="chk-k">세부 정보</span>제작자·소유자·업무 목적·게시 채널을 확인하고, <b>제작자·소유자가 식별·검증 가능한가</b></span></li><li><input type="checkbox"><span><span class="chk-k">데이터 &amp; 도구</span>연결된 지식 원본과 MCP 도구 목록을 확인하고, <b>목적·지침 대비 적정한 MCP 도구만 연결되어 있는가</b>(불필요한 광범위 도구 없음), <b>지식 원본이 민감 사이트·과도한 범위를 포함하지 않는가</b></span></li><li><input type="checkbox"><span><span class="chk-k">사용 권한</span>에이전트가 요청하는 API/커넥터 권한이 <b>업무 목적에 비해 과도하지 않은가</b>(최소 권한)</span></li></ul><span class="hl-note">부적절한 경우 승인을 보류하고 제작자에게 수정 요청 후 재제출받습니다.</span></div>""",
  64: """
       <figure class="fig" id="s64-2">
-        <div class="fig-title"><span class="fig-num">4-15</span>에이전트 경고 확인 — 경고 상세 (지표·심각도·관련 엔터티)</div>
+        <div class="fig-title"><span class="fig-num">3-15</span>에이전트 경고 확인 — 경고 상세 (지표·심각도·관련 엔터티)</div>
         <a href="img/irm-3-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-2.png" alt="경고 상세 - 지표·심각도·관련 엔터티"></a>
       </figure>
       <div class="note">① 경고를 열어 <b>심각도·위험 점수</b>를 확인하고, ② 우측 <b>경고 세부 정보</b> 패널에서 해당 경고와 연관된 <b>이벤트와 에이전트</b>를 파악합니다.</div>
       <figure class="fig" id="s64-3">
-        <div class="fig-title"><span class="fig-num">4-16</span>에이전트 경고 확인 — 활동 탐색기 (활동·프롬프트·응답 세부)</div>
+        <div class="fig-title"><span class="fig-num">3-16</span>에이전트 경고 확인 — 활동 탐색기 (활동·프롬프트·응답 세부)</div>
         <a href="img/irm-3-3.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-3.png" alt="활동 탐색기 - 활동·프롬프트·응답 세부"></a>
       </figure>
       <div class="note">① <b>활동 탐색기</b>에서 개별 활동을 선택하면 우측 상세 패널에 <b>활동 세부 정보</b>(작업·워크로드·AI 애플리케이션)와 함께, ② <b>프롬프트 세부 정보</b>(실제 입력 프롬프트·프롬프트 ID), ③ <b>응답 세부 사항</b>(응답 ID·중요한 정보 유형)이 표시됩니다. 이를 통해 <b>어떤 프롬프트가 어떤 응답·리소스로 이어졌는지</b>를 활동 종류별로 추적할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span></div>""",
@@ -537,39 +537,36 @@ CH5_OVERVIEW = [
     ["0", "감사 준비",
      "Purview 포털 > 감사 > 감사 수집 상태 (+ 각 솔루션 역할)",
      "감사 로그 수집 활성화(DLP·CC·IRM 경고 공통 전제), 관리자·분석가 역할 확보", "step-ch5-0"],
-    ["1", "DLP 정책 — Copilot",
-     "Purview > 데이터 손실 방지 > 정책<br>(Microsoft 365 Copilot·Copilot Chat 위치)",
-     "민감 정보 유형(SIT) 포함 프롬프트 처리 차단", "step-ch5-1"],
-    ["2", "DLP 정책 — Teams",
+    ["1", "DLP 정책 — Teams",
      "Purview > 데이터 손실 방지 > 정책<br>(Teams 채팅·채널 메시지 위치)",
-     "SIT 포함 Teams 메시지 전송 차단 → 실제 차단·경고 생성 확인", "step-ch5-2"],
-    ["3", "커뮤니케이션 규정 준수 정책",
+     "SIT 포함 Teams 메시지 전송 차단 → 실제 차단·경고 생성 확인", "step-ch5-1"],
+    ["2", "커뮤니케이션 규정 준수 정책",
      "Purview > 커뮤니케이션 규정 준수 > 정책<br>(AI 에이전트 비윤리적 상호작용 템플릿)",
-     "에이전트 상호작용의 부적절·비윤리·기밀 공유 탐지", "step-ch5-3"],
-    ["4", "IRM 에이전트 정책",
+     "에이전트 상호작용의 부적절·비윤리·기밀 공유 탐지", "step-ch5-2"],
+    ["3", "IRM 에이전트 정책",
      "Purview > 내부 위험 관리 > 정책 / 에이전트 경고",
-     "에이전트 활동 기반 위험 점수 산정, DLP·CC 신호를 상관분석해 위험 지표·경고 확인", "step-ch5-4"],
-    ["5", "리스크 탐지 (DSPM)",
+     "에이전트 활동 기반 위험 점수 산정, DLP·CC 신호를 상관분석해 위험 지표·경고 확인", "step-ch5-3"],
+    ["4", "리스크 탐지 (DSPM)",
      "Purview > DSPM > 검색 > 앱 및 에이전트",
-     "에이전트별 보호 상태·위험 수준, 위험 상호작용·부적절 사용 보고서 확인", "step-ch5-5"],
+     "에이전트별 보호 상태·위험 수준, 위험 상호작용·부적절 사용 보고서 확인", "step-ch5-4"],
 ]
 
-# ===== Chapter 5 — DSPM (5단계) : IRM(4단계) 뒤에 주입 =====
+# ===== Chapter 5 — DSPM (4단계) : IRM(3단계) 뒤에 주입 =====
 CH5_DSPM_FIGS = [
     ("callout",
-     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-5">5단계 · 리스크 탐지 (DSPM)</h2>'
+     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · 리스크 탐지 (DSPM)</h2>'
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">앞의 DLP·CC·IRM이 개별 정책으로 위반을 탐지·차단한다면, '
      '<b>데이터 보안 상태 관리(DSPM)</b>는 이 신호들을 한곳에 모아 <b>에이전트별 보호 상태·위험 수준</b>을 한눈에 보여줍니다. '
      'Purview DSPM의 <b>앱 및 에이전트</b>에서 에이전트 보고서를 열어 위험 상호작용과 부적절한 사용을 확인합니다.</p>'),
-    ("dspm-5-1", "5-1", "에이전트 보고서 확인", "img/dspm-5-1.png",
+    ("dspm-5-1", "4-1", "에이전트 보고서 확인", "img/dspm-5-1.png",
      "<code>Purview &gt; DSPM &gt; 검색 &gt; 앱 및 에이전트</code>에서 ① 좌측 레일의 <b>DSPM</b> → ② <b>검색</b> → ③ <b>앱 및 에이전트</b>로 이동한 뒤 ④ <b>에이전트</b> 탭을 엽니다. ⑤ 목록 위의 <b>에이전트 보고서</b>를 선택하고, ⑥ 오른쪽 패널에서 보고서 유형(가장 활발한 / 가장 최근 / 사용자가 가장 많은 / 위험 수준이 높은 사용자가 쓰는 에이전트)을 고른 뒤 ⑦ <b>보고서 보기</b>를 누릅니다. 목록에서는 각 에이전트의 <b>보호 상태</b>(모니터링됨)와 <b>위험 수준</b>(High 등)을 바로 확인할 수 있습니다."),
-    ("dspm-5-1b", "5-2", "에이전트 보고서 — 위험 상호작용·부적절 사용", "img/dspm-report-detail1.png",
+    ("dspm-5-1b", "4-2", "에이전트 보고서 — 위험 상호작용·부적절 사용", "img/dspm-report-detail1.png",
      "보고서에서 <b>개별 에이전트</b>를 선택하면 세부 페이지가 열립니다. 여기서 해당 에이전트의 <b>위험한 상호작용 경고</b>(위험한 AI 사용 기록이 있는 사용자)와 <b>부적절한 사용</b>(프롬프트·응답에서 탐지된 Threat·Targeted Harassment 등 비윤리적 인스턴스)을 확인할 수 있습니다."),
-    ("dspm-5-1c", "5-3", "에이전트 보고서 — 참여 인사이트", "img/dspm-report-detail2.png",
+    ("dspm-5-1c", "4-3", "에이전트 보고서 — 참여 인사이트", "img/dspm-report-detail2.png",
      "아래로 내리면 <b>시간 경과에 따라 생성된 응답</b> 추이 차트와 <b>참여 인사이트</b>(평균/일일 프롬프트·응답 수, 상위 사용자 활동, 프롬프트·응답의 중요한 데이터 비율)가 표시됩니다. 에이전트의 실제 사용량과 민감 데이터 노출 비중을 한 화면에서 파악할 수 있습니다."),
-    ("dspm-5-2", "5-4", "활동 탐색기 확인", "img/dspm-5-2.png",
+    ("dspm-5-2", "4-4", "활동 탐색기 확인", "img/dspm-5-2.png",
      "<code>DSPM &gt; 검색 &gt; ① 활동 탐색기</code>에서 ② <b>AI 활동</b> 탭을 열면 <b>AI 상호작용(프롬프트·응답)</b>과 중요한 정보 유형이 포함된 활동을 시계열로 검토할 수 있습니다."),
-    ("dspm-5-2b", "5-5", "활동 탐색기 — 상호작용 세부 (프롬프트·응답)", "img/dspm-activity-detail.png",
+    ("dspm-5-2b", "4-5", "활동 탐색기 — 상호작용 세부 (프롬프트·응답)", "img/dspm-activity-detail.png",
      "목록에서 개별 항목을 선택하면 오른쪽 패널에서 해당 상호작용의 <b>프롬프트와 응답 원문</b>, <b>탐지된 민감 정보</b>, <b>액세스된 리소스(AI 앱)</b> 등을 확인할 수 있습니다. <span class=\"hl-note\">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span>"),
 ]
 
@@ -582,46 +579,34 @@ CH5_NEW_FIGS = [
     ("s-audit", "0-1", "감사 준비 — 활성화 상태 확인", "img/slide-49.png",
      "<code>Purview &gt; 감사 &gt; 감사 수집 상태</code>에서 감사 로그 수집이 켜져 있는지 먼저 확인합니다. <b>감사 로그가 꺼져 있으면 DLP·CC·IRM 정책을 만들어도 분석할 활동 이벤트 자체가 없어 지표·경고가 생성되지 않습니다.</b> 이 단계는 이후 세 정책 모두의 공통 전제입니다."),
 
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-1">1단계 · DLP 정책 — Microsoft 365 Copilot</h2>'),
-    ("s-dlp-cp", "1-1", "DLP 정책 생성 — 정보 형식 선택", "img/dlp-cp-type.png",
-     "<code>Purview &gt; 데이터 손실 방지 &gt; 정책 &gt; 정책 만들기</code>를 시작하면 <b>“어떤 정보를 보호하시겠습니까?”</b> 화면이 나옵니다. ① <b>엔터프라이즈 애플리케이션 및 디바이스</b>를 선택합니다. 이 범주에 <b>Microsoft Copilot 환경</b>이 포함되며, Teams / Microsoft 365 Copilot 채널에 게시된 <b>Copilot Studio 에이전트</b>의 상호작용도 이 위치에서 통제됩니다. 이어서 규정에서 <b>사용자 지정 정책</b>으로 시작합니다(Copilot 콘텐츠 보호는 사용자 지정 정책에서만 구성 가능). 이 작업에는 <b>Purview 데이터 보안 AI 관리자</b> 또는 규정 준수 관리자 역할이 필요합니다."),
-    ("dlp-cp-2", "1-2", "DLP 정책 생성 — 위치(Microsoft 365 Copilot 및 Copilot Chat)", "img/dlp-cp-loc.png",
-     "위치 단계에서 ① <b>Microsoft 365 Copilot 및 Copilot Chat</b> 위치만 켭니다. 에이전트가 이 채널을 통해 노출되므로, 이 위치가 에이전트에 전달되는 프롬프트에 적용됩니다."),
-    ("dlp-cp-3", "1-3", "DLP 정책 생성 — 규칙(조건·작업)", "img/dlp-cp-rule.png",
-     "규칙에서 ① 조건으로 <b>콘텐츠에 중요 정보 유형(SIT)</b> — 이 실습에서는 <code>Credit Card Number</code>를 지정하고, ② 작업으로 <b>Copilot이 콘텐츠를 처리하지 못하도록 제한 &gt; 프롬프트 처리 중</b>을 선택합니다. 즉 민감정보가 포함된 프롬프트의 처리를 차단하고 관리자에게 알립니다.<br><br><span class=\"hl-note\">요약의 <code>HasActivity: UploadText</code>는 '프롬프트 처리 차단' 동작이 내부적으로 표현된 값으로, 별도로 추가한 조건이 아닙니다.</span>"),
-    ("dlp-cp-4", "1-4", "DLP 정책 생성 — 정책 모드(즉시 켜기)", "img/dlp-cp-mode.png",
-     "정책 모드에서 ① <b>정책을 즉시 켭니다</b>를 선택합니다. 시뮬레이션 모드는 실제 차단 없이 영향도만 평가하므로, 실제 차단·경고를 확인하려면 즉시 켜기로 활성화합니다."),
-    ("dlp-cp-5", "1-5", "DLP 정책 생성 — 완료", "img/dlp-cp-done.png",
-     "정책이 생성되면 <b>DLP 경고</b>에서 정책 일치를 모니터링할 수 있습니다.<br><br><b>⚠️ Notice —</b> M365 Copilot 위치의 <b>프롬프트 처리 차단은 현재 미리 보기</b>로 순차 배포 중이며, 정책 활성화 전파에 시간이 걸립니다. 또한 <b>에이전트 자체 안전장치·모델 콘텐츠 필터가 DLP보다 먼저 응답을 막을 수</b> 있어, DLP 차단 UX와 경고는 지연되어 나타날 수 있습니다. 관련 기능·요건은 <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about' target='_blank' rel='noopener'>Microsoft 365 Copilot용 DLP(공식 문서)</a>를 참고하세요."),
-
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-2">2단계 · DLP 정책 — Teams</h2>'),
-    ("s-dlp-tm", "2-1", "DLP 정책 생성(Teams) — 정보 형식 선택", "img/dlp-tm-type.png",
-     "1단계와 동일하게 <code>Purview &gt; 데이터 손실 방지 &gt; 정책 &gt; 정책 만들기</code>에서 ① <b>엔터프라이즈 애플리케이션 및 디바이스</b>를 선택하고, 규정에서 <b>사용자 지정 정책</b>으로 시작합니다. 이번에는 <b>Teams 채팅·채널 메시지</b>를 대상으로 하는 별도 정책을 만듭니다."),
-    ("dlp-tm-2", "2-2", "DLP 정책 생성(Teams) — 위치(Teams 채팅 및 채널 메시지)", "img/dlp-tm-loc.png",
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-1">1단계 · DLP 정책 — Teams</h2>'),
+    ("s-dlp-tm", "1-1", "DLP 정책 생성(Teams) — 정보 형식 선택", "img/dlp-tm-type.png",
+     "<code>Purview &gt; 데이터 손실 방지 &gt; 정책 &gt; 정책 만들기</code>에서 ① <b>엔터프라이즈 애플리케이션 및 디바이스</b>를 선택하고, 규정에서 <b>사용자 지정 정책</b>으로 시작합니다. <b>Teams 채팅·채널 메시지</b>를 대상으로 하는 정책을 만듭니다."),
+    ("dlp-tm-2", "1-2", "DLP 정책 생성(Teams) — 위치(Teams 채팅 및 채널 메시지)", "img/dlp-tm-loc.png",
      "위치 단계에서 ① <b>Teams 채팅 및 채널 메시지</b>만 켭니다(Exchange·SharePoint·OneDrive·장치 등 나머지 위치는 모두 끔). 에이전트가 <b>Teams 채널</b>에서 상호작용할 때의 메시지 데이터 유출을 통제합니다."),
-    ("dlp-tm-3", "2-3", "DLP 정책 생성(Teams) — 규칙(조건·작업)", "img/dlp-tm-rule.png",
+    ("dlp-tm-3", "1-3", "DLP 정책 생성(Teams) — 규칙(조건·작업)", "img/dlp-tm-rule.png",
      "규칙에서 ① 조건으로 <b>콘텐츠에 중요 정보 유형(SIT)</b> — <code>Credit Card Number</code>(메시지 또는 첨부 파일 평가)를 지정하고, ② 작업으로 <b>Microsoft 365 위치의 콘텐츠 제한 또는 암호화</b>를 추가합니다. 이 작업은 보호 대상 SIT가 포함된 <b>Teams 채팅·채널 메시지 전송을 차단</b>(모든 사용자 차단)하고 관리자에게 알립니다."),
-    ("dlp-tm-4", "2-4", "DLP 정책 생성(Teams) — 정책 모드(즉시 켜기)", "img/dlp-tm-mode.png",
-     "정책 모드에서 ① <b>정책을 즉시 켭니다</b>를 선택합니다. 1단계와 동일하게, 실제 차단·경고를 확인하려면 시뮬레이션이 아닌 즉시 켜기로 활성화합니다."),
-    ("dlp-tm-5", "2-5", "DLP 정책 생성(Teams) — 완료", "img/dlp-tm-done.png",
-     "Teams용 DLP 정책 생성이 완료됩니다. Copilot용(1단계)과 Teams용(2단계)을 분리해 두면, 에이전트가 어느 표면(Copilot 채팅 / Teams 메시지)에서 민감정보를 다루는지에 따라 탐지·차단 지점을 명확히 구분할 수 있습니다."),
-    ("dlp-tm-block", "2-6", "실제 동작 — Teams 메시지 전송 차단", "img/dlp-tm-block.png",
+    ("dlp-tm-4", "1-4", "DLP 정책 생성(Teams) — 정책 모드(즉시 켜기)", "img/dlp-tm-mode.png",
+     "정책 모드에서 ① <b>정책을 즉시 켭니다</b>를 선택합니다. 실제 차단·경고를 확인하려면 시뮬레이션이 아닌 즉시 켜기로 활성화합니다."),
+    ("dlp-tm-5", "1-5", "DLP 정책 생성(Teams) — 완료", "img/dlp-tm-done.png",
+     "Teams용 DLP 정책 생성이 완료됩니다.<br><br><b>⚠️ Notice —</b> 에이전트 상호작용에서 <b>실제 입력 차단이 확인된 표면은 Teams 메시지</b>입니다. Purview의 <b>Microsoft 365 Copilot 및 Copilot Chat</b> 위치 DLP는 Copilot 자체의 프롬프트 처리를 대상으로 하며, <b>Copilot Studio 에이전트를 M365 Copilot 채널에서 호출하는 경로에서는 동일한 inline 차단이 확인되지 않았습니다</b>(테스트 기준). 참고: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about' target='_blank' rel='noopener'>Microsoft 365 Copilot용 DLP(공식 문서)</a>."),
+    ("dlp-tm-block", "1-6", "실제 동작 — Teams 메시지 전송 차단", "img/dlp-tm-block.png",
      "데모 에이전트(<code>Agent365-Guide-Demo</code>)가 게시된 Teams 채팅에 <code>Credit Card Number</code> 패턴(테스트용 카드번호)을 보내자, <b>메시지가 즉시 차단</b>되고 <b>“조직 정책으로 인해 메시지가 차단되었습니다”</b> 안내와 함께 위반한 SIT <b>Credit Card Number</b>가 표시됩니다. 에이전트에 전달되기 전에 <b>메시지 자체가 전송 차단</b>된 것으로, 에이전트 자체 안전거부와는 구분되는 <b>DLP 계층의 실제 차단</b>입니다."),
-    ("dlp-tm-alert", "2-7", "실제 동작 — Purview DLP 경고 생성", "img/dlp-tm-alert.png",
+    ("dlp-tm-alert", "1-7", "실제 동작 — Purview DLP 경고 생성", "img/dlp-tm-alert.png",
      "차단과 동시에 <code>Purview &gt; 데이터 손실 방지 &gt; 경고</code>에 경고가 생성됩니다. 경고 상세의 <b>정책 세부 정보</b>에서 일치한 정책 <b>Agent365-Guide-DLP-Teams</b>, 감지된 중요한 정보 유형 <b>Credit Card Number</b>, 수행한 작업 <b>BlockAccess, GenerateAlert</b>를 확인할 수 있습니다. 즉 <b>차단(BlockAccess)</b>과 <b>경고(GenerateAlert)</b>가 함께 수행되어, 관리자가 실제 위반 이벤트를 사후에 추적할 수 있습니다."),
 
-    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3">3단계 · 커뮤니케이션 규정 준수 정책</h2>'),
-    ("s-cc", "3-1", "커뮤니케이션 규정 준수 정책 생성 — 정책 템플릿", "img/cc-template.png",
+    ("callout", '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-2">2단계 · 커뮤니케이션 규정 준수 정책</h2>'),
+    ("s-cc", "2-1", "커뮤니케이션 규정 준수 정책 생성 — 정책 템플릿", "img/cc-template.png",
      "<code>커뮤니케이션 규정 준수 &gt; 정책 &gt; 정책 만들기</code>에서 ① <b>AI 에이전트의 비윤리적 상호작용 탐지</b> 템플릿을 선택합니다. 이 템플릿은 <b>AI 에이전트가 보낸 메시지</b>에서 모욕적·위협적 언어 등 부적절한 텍스트를 탐지합니다(단순 Copilot 채팅이 아니라 에이전트 대상)."),
-    ("cc-2", "3-2", "커뮤니케이션 규정 준수 정책 생성 — 구성(에이전트·검토자)", "img/cc-config.png",
+    ("cc-2", "2-2", "커뮤니케이션 규정 준수 정책 생성 — 구성(에이전트·검토자)", "img/cc-config.png",
      "① 감독할 AI 에이전트에서 <b>생성된 에이전트 &gt; Microsoft Copilot Studio</b>를 선택하고, ② <b>검토자</b>를 지정합니다. 커뮤니케이션 규정 준수는 <b>Microsoft 365 Copilot과 Copilot Studio로 만든 에이전트</b>의 프롬프트·응답 상호작용을 분석합니다. 근거: <a class='xref-ext' href='https://learn.microsoft.com/en-us/purview/communication-compliance-copilot' target='_blank' rel='noopener'>생성형 AI 상호작용 탐지 정책(공식 문서)</a>."),
-    ("cc-3", "3-3", "커뮤니케이션 규정 준수 정책 생성 — 완료", "img/cc-done.png",
+    ("cc-3", "2-3", "커뮤니케이션 규정 준수 정책 생성 — 완료", "img/cc-done.png",
      "커뮤니케이션 규정 준수 정책 생성이 완료됩니다. <b>정책 활성화에 최대 1시간, 통신 캡처(경고 생성)에 최대 24시간</b>이 소요됩니다."),
-    ("cc-result", "3-4", "실제 동작 — 검토 큐(보류 중) 항목", "img/cc-result.png",
-     "CC는 메시지를 차단하지 않고, 정책이 매칭한 에이전트 상호작용을 <code>정책 &gt; 보류 중(Pending)</code> 큐로 올립니다. 검토자는 항목을 열어 <b>검색된 조건</b>, <b>프롬프트·응답</b>, <b>사용자 활동</b>을 확인하고 <b>해결·에스컬레이션·태그·알림</b>으로 조치합니다. 이 예시 항목은 <b>Prompt Shields</b> 조건으로 탐지되었습니다(적대적 입력 탐지)."),
+    ("cc-result", "2-4", "실제 동작 — 검토 큐(보류 중) 항목", "img/cc-result.png",
+     "CC는 메시지를 차단하지 않고, 정책이 매칭한 에이전트 상호작용을 <code>정책 &gt; 보류 중(Pending)</code> 큐로 올립니다. 검토자는 항목을 열어 <b>검색된 조건</b>, <b>프롬프트·응답</b>, <b>사용자 활동</b>을 확인하고 <b>해결·에스컬레이션·태그·알림</b>으로 조치합니다."),
 
     ("callout",
-     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-4">4단계 · IRM 에이전트 정책</h2>'
+     '<h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch5-3">3단계 · IRM 에이전트 정책</h2>'
      '<p style="font-size:14.5px;color:var(--text-soft);margin:0 0 8px;">Purview <b>내부 위험 관리(IRM)</b>에서 에이전트 정책을 만들어 활동 기반 위험 신호를 수집하고 경고를 확인합니다. '
      'DLP·CC가 개별 위반을 <b>탐지·차단</b>하는 계층이라면, IRM은 이 신호들을 포함한 여러 활동을 <b>상관분석해 사용자별 위험 점수</b>를 산정하는 계층입니다. 실제로 <b>High 심각도 DLP 경고</b> 등은 IRM 정책의 <b>트리거·지표</b>로 작동하므로, 하나의 에이전트 활동을 DLP·CC 경고와 IRM 위험 점수로 <b>연결해 확인</b>할 수 있습니다.</p>'),
 ]
@@ -808,7 +793,7 @@ for c in CH:
         else:
             step = k
         if c["id"] == "ch5":
-            step = 4  # IRM 파트는 4단계 (4-1, 4-2... 연속 번호)
+            step = 3  # IRM 파트는 3단계 (3-1, 3-2... 연속 번호)
         elif valid_steps and step not in valid_steps:
             step = last_valid if last_valid is not None else min(valid_steps)
         last_valid = step
