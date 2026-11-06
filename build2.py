@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import json, os, html, re
 from deck_snapshot import TITLES, TABLES  # 덱 의존성 제거: deck.json 대신 구워둔 스냅샷 사용
 
@@ -173,7 +173,7 @@ EXTRA = {
         <div class="fig-title"><span class="fig-num">3-16</span>에이전트 경고 확인 — 활동 탐색기 (활동·프롬프트·응답 세부)</div>
         <a href="img/irm-3-3.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-3.png" alt="활동 탐색기 - 활동·프롬프트·응답 세부"></a>
       </figure>
-      <div class="note">① <b>활동 탐색기</b>에서 개별 활동을 선택하면 우측 상세 패널에 <b>활동 세부 정보</b>(작업·워크로드·AI 애플리케이션)와 함께, ② <b>프롬프트 세부 정보</b>(실제 입력 프롬프트·프롬프트 ID), ③ <b>응답 세부 사항</b>(응답 ID·중요한 정보 유형)이 표시됩니다. 이를 통해 <b>어떤 프롬프트가 어떤 응답·리소스로 이어졌는지</b>를 활동 종류별로 추적할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span></div>""",
+      <div class="note">① <b>활동 탐색기</b>에서 개별 활동을 선택하면 우측 상세 패널에 <b>활동 세부 정보</b>(작업·워크로드·AI 애플리케이션)와 함께, ② <b>프롬프트 세부 정보</b>(실제 입력 프롬프트·프롬프트 ID), ③ <b>응답 세부 사항</b>(응답 ID·중요한 정보 유형)이 표시됩니다. 이를 통해 <b>어떤 프롬프트가 어떤 응답·리소스로 이어졌는지</b>를 활동 종류별로 추적할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 기본 관리자 역할(Compliance Administrator 등)로도 볼 수 없으며, <b>Content Explorer Content Viewer</b> 또는 <b>Microsoft Purview Data Security AI Content Viewer</b> 역할이 있어야 볼 수 있습니다.</span></div>""",
  80: """
       <h2 class="ov-h step-h" style="margin-top:40px;" id="step-ch7-6">6단계 · 런타임 탐지</h2>
       <figure class="fig" id="s80-2">
@@ -567,7 +567,7 @@ CH5_DSPM_FIGS = [
     ("dspm-5-2", "4-4", "활동 탐색기 확인", "img/dspm-5-2.png",
      "<code>DSPM &gt; 검색 &gt; ① 활동 탐색기</code>에서 ② <b>AI 활동</b> 탭을 열면 <b>AI 상호작용(프롬프트·응답)</b>과 중요한 정보 유형이 포함된 활동을 시계열로 검토할 수 있습니다."),
     ("dspm-5-2b", "4-5", "활동 탐색기 — 상호작용 세부 (프롬프트·응답)", "img/dspm-activity-detail.png",
-     "목록에서 개별 항목을 선택하면 오른쪽 패널에서 해당 상호작용의 <b>프롬프트와 응답 원문</b>, <b>탐지된 민감 정보</b>, <b>액세스된 리소스(AI 앱)</b> 등을 확인할 수 있습니다. <span class=\"hl-note\">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span>"),
+     "목록에서 개별 항목을 선택하면 오른쪽 패널에서 해당 상호작용의 <b>프롬프트와 응답 원문</b>, <b>탐지된 민감 정보</b>, <b>액세스된 리소스(AI 앱)</b> 등을 확인할 수 있습니다. <span class=\"hl-note\">프롬프트·응답 원문은 기본 관리자 역할(Compliance Administrator 등)로도 볼 수 없으며, <b>Content Explorer Content Viewer</b> 또는 <b>Microsoft Purview Data Security AI Content Viewer</b> 역할이 있어야 볼 수 있습니다.</span>"),
 ]
 
 _PH_ALERT = ('<span class="hl-note">경고(alert)는 정책 활성화 후 백엔드에서 집계되어 '
@@ -1084,7 +1084,7 @@ ROLES = [
  ("2", "인벤토리 확인", "AI 읽기 권한자", "Entra > 사용자 > 할당된 역할"),
  ("3", "에이전트 차단", "AI 관리자 · 에이전트 ID 관리자", "Entra > 사용자 > 할당된 역할"),
  ("4", "기본 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
- ("5", "리스크 탐지", "내부자 위험 관리 분석가 또는 조사자", "Purview > 역할 및 범위 > 역할 그룹"),
+ ("5", "리스크 탐지", "내부자 위험 관리 분석가 또는 조사자(IRM 정책) · Content Explorer Content Viewer 또는 Data Security AI Content Viewer(프롬프트·응답 원문 열람)", "Purview > 역할 및 범위 > 역할 그룹"),
  ("6", "리스크 기반 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
  ("7", "런타임 보호", "애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자", "Entra > 역할 / Power Platform 관리 센터"),
  ("8", "트래픽 모니터링", "전역 보안 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
