@@ -232,7 +232,13 @@ EXTRA = {
           Operation = tostring(d.Operation),
           ErrorMessage = tostring(d.ErrorMessage),
           IPAddress, CountryCode
-| order by Timestamp desc</code></pre></div>""",
+| order by Timestamp desc</code></pre></div>
+      <div class="ref-card" style="margin-top:18px;">
+        <div class="fig-title"><span class="fig-num" style="background:var(--surface-2);color:var(--text-soft);">참고</span>AI 에이전트 조사에 사용되는 고급 헌팅 테이블</div>
+        <p style="margin:0 0 12px;font-size:14px;">Defender는 에이전트 경고를 인시던트로 상관하고, 고급 헌팅(KQL)으로 Agent 365 가시성 데이터를 다른 보안 데이터와 함께 조회할 수 있게 합니다. 아래 테이블은 <b>에이전트 구성·경고·활동</b>의 가시성을 제공하며, 개별 조회하거나 서로 조인해 인시던트 조사와 위험 탐색에 사용합니다.</p>
+        <div class="tw tw-fields"><table><thead><tr><th>테이블</th><th>설명</th><th>일반적인 사용 사례</th></tr></thead><tbody><tr><td><a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/advanced-hunting-alertinfo-table' target='_blank' rel='noopener'><code>AlertInfo</code></a></td><td>거의 실시간 탐지와 관련된 경고를 포함해 Defender가 생성한 경고 메타데이터</td><td>AI 에이전트 경고를 조사하고 경고 맥락·관련 인시던트·엔터티 파악</td></tr><tr><td><a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/advanced-hunting-cloudappevents-table' target='_blank' rel='noopener'><code>CloudAppEvents</code></a></td><td>에이전트 작업·도구 호출·데이터 액세스 이벤트 등 AI 에이전트 활동에 대한 Agent 365 가시성 데이터</td><td>의심스러운 에이전트 동작 탐색, 에이전트 작업 추적, 근본 원인 분석</td></tr><tr><td><a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/advanced-hunting-agentsinfo-table' target='_blank' rel='noopener'><code>AgentsInfo</code></a></td><td>에이전트 ID·플랫폼·소유권·메타데이터 등 AI 에이전트 인벤토리·구성 정보</td><td>에이전트 상태 검토, 위험하거나 잘못 구성된 에이전트 식별, 에이전트 ID를 경고·활동과 연관</td></tr><tr><td><a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/advanced-hunting-alertevidence-table' target='_blank' rel='noopener'><code>AlertEvidence</code></a></td><td>에이전트·사용자·도구·URL·리소스 등 경고와 연결된 엔터티·아티팩트</td><td>경고 범위 파악, AI 에이전트 인시던트 관련 엔터티 식별</td></tr><tr><td><a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/advanced-hunting-behaviorinfo-table' target='_blank' rel='noopener'><code>BehaviorInfo</code></a></td><td>감사·차단 이벤트 등 실시간 보호 규칙 작업을 쿼리 가능한 원격 분석으로 기록한 동작</td><td>실시간 보호 이벤트 기반 사용자 지정 검색·헌팅 쿼리·다운스트림 자동화</td></tr><tr><td><a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/advanced-hunting-behaviorentities-table' target='_blank' rel='noopener'><code>BehaviorEntities</code></a></td><td>에이전트·사용자·도구·리소스 등 동작과 연결된 엔터티·아티팩트</td><td>동작을 관련 엔터티와 연관해 실시간 보호 이벤트의 범위 조사</td></tr></tbody></table></div>
+        <div class="ref-links"><b>출처:</b> <a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/security-for-ai/ai-agent-detection-protection#advanced-hunting-tables-for-ai-agent-investigation' target='_blank' rel='noopener'>Microsoft Defender를 사용하여 AI 에이전트에 대한 위협 감지 및 조사(미리 보기) — AI 에이전트 조사에 사용되는 고급 헌팅 테이블(공식 문서)</a></div>
+      </div>""",
 }
 
 # 챕터 intro 표에 덱 외 추가 행(항목, 설정 위치, 확인 포인트)과 점프 대상
@@ -1032,7 +1038,15 @@ HTML = """<!DOCTYPE html>
 </div></main>
 </div>
 <script>
-const links=Array.from(document.querySelectorAll('.nav-group a'));
+function goEl(el){
+  const pg=el.closest('.page')||document;
+  const imgs=Array.from(pg.querySelectorAll('img[loading=lazy]'));
+  imgs.forEach(i=>{i.loading='eager';});
+  const pend=imgs.filter(i=>!i.complete).map(i=>new Promise(r=>{i.addEventListener('load',r,{once:true});i.addEventListener('error',r,{once:true});}));
+  const run=()=>{el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');};
+  if(!pend.length){run();return;}
+  Promise.race([Promise.all(pend),new Promise(r=>setTimeout(r,3000))]).then(run);
+}const links=Array.from(document.querySelectorAll('.nav-group a'));
 const ids=links.map(a=>a.dataset.sec);
 function show(id,push){if(!ids.includes(id))id=ids[0];
  document.querySelectorAll('.page').forEach(s=>s.classList.toggle('active',s.id===id));
@@ -1046,7 +1060,7 @@ window.addEventListener('hashchange',()=>show((location.hash||'').replace('#',''
 document.querySelectorAll('tr.jump').forEach(row=>{
   const go=()=>{const tgt=row.dataset.target;
     if(ids.includes(tgt)){show(tgt,true);return;}
-    const el=document.getElementById(tgt);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');};
+    const el=document.getElementById(tgt);if(!el)return;goEl(el);};
   row.addEventListener('click',go);
   row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
 });
@@ -1062,7 +1076,7 @@ document.querySelectorAll('.copy-btn').forEach(btn=>{
 document.querySelectorAll('.xref').forEach(a=>{
   a.addEventListener('click',e=>{e.preventDefault();const t=a.dataset.target;
     if(ids.includes(t)){show(t,true);return;}
-    const el=document.getElementById(t);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
+    const el=document.getElementById(t);if(!el)return;goEl(el);});
 });
 const tt=document.getElementById('tt');
 tt.addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',c);try{localStorage.setItem('a365theme',c);}catch(e){}});
